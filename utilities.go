@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func clear() {
 	fmt.Printf("\033[H\033[2J")
@@ -24,6 +27,7 @@ func loop() {
 	} else if valeur == "exit" {
 		clear()
 		fmt.Println("exit the game successfully")
+		os.Exit(0)
 	} else {
 		clear()
 		loop()
