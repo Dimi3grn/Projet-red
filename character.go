@@ -61,6 +61,9 @@ func (u character) displayinfo() {
 	read := readTer()
 	if read == "exit" {
 		clear()
+	} else {
+		clear()
+		u.displayinfo()
 	}
 }
 

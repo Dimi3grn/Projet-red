@@ -55,7 +55,7 @@ func (u *character) accessInventory() {
 		}
 		fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
 		fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
-		fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Health Pot\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
+		fmt.Printf("%s╭%s'[slot number]'%s pour utiliser l'objet\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
 
 		var choix string
 		fmt.Scan(&choix)
@@ -70,22 +70,23 @@ func (u *character) accessInventory() {
 		var choixInt int
 		_, err := fmt.Sscanf(choix, "%d", &choixInt)
 		if err != nil || choixInt <= 0 || choixInt > len(u.inv) {
+			clear()
 			fmt.Println("Choix invalide, veuillez réessayer.")
 			continue // Rester dans le menu si l'entrée est invalide
 		}
 
 		item := u.inv[choixInt-1] // Récupérer l'objet choisi
-		switch item.name {
-		case "Livre de Sort: Boule de Feu":
+		switch item.id {
+		case 4:
 			clear()
 			u.spellBook("Boule de feu")
 			u.removeInventory(item)
 			fmt.Println("Vous avez appris le sort 'Boule de feu' !")
-		case "Health Pot":
+		case 1:
 			clear()
 			u.takePot()
 
-		case "Poison Pot":
+		case 2:
 			clear()
 			u.takePoisonPot()
 		default:
