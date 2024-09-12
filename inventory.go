@@ -57,15 +57,27 @@ func (u *character) accessInventory() {
 	fmt.Printf("Tapez le numéro de l'objet à utiliser ou %s'exit'%s pour sortir.", red, reset)
 	var choix int
 	fmt.Scan(&choix)
-	if choix == 3 {
-		for i, item := range u.inv {
-			if item.name == "Livre de Sort: Boule de Feu" {
-				u.spellBook("Boule de feu")
-				u.inv = append(u.inv[:i], u.inv[i+1:]...)
-				break
-			}
-		}
+	if choix == 0 {
+		loop()
+		return
 	}
+
+	// Vérifier si le choix est valide
+	if choix > 0 && choix <= len(u.inv) {
+		item := u.inv[choix-1] // Récupérer l'objet choisi
+		if item.name == "Livre de Sort: Boule de Feu" {
+			u.spellBook("Boule de feu")
+			// Retirer l'objet après utilisation
+			u.inv = append(u.inv[:choix-1], u.inv[choix:]...)
+			fmt.Println("Vous avez appris le sort 'Boule de feu' !")
+		} else {
+			fmt.Println("Cet objet ne peut pas être utilisé.")
+		}
+	} else {
+		fmt.Println("Choix invalide.")
+	}
+
+	u.accessInventory() // Réafficher l'inventaire après interaction
 }
 
 func (u *character) takePot() {

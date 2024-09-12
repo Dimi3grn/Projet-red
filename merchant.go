@@ -47,9 +47,11 @@ func (u *character) accessMerchant() {
 	case "1":
 		if healthPotAvailable {
 			u.addInventory(obj1) // Ajoute la potion de vie
+			clear()
 			fmt.Println("Vous avez acheté une Potion de vie !")
 			healthPotAvailable = false // Potion n'est plus disponible après l'achat
 		} else {
+			clear()
 			fmt.Println("Le marchand n'a plus de potions de vie.")
 		}
 		u.accessMerchant()
@@ -64,8 +66,10 @@ func (u *character) accessMerchant() {
 				poisonPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
 			}
 		} else if u.purse < price_2 {
+			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
 		} else {
+			clear()
 			fmt.Println("Le marchand n'a plus de potions de poison.")
 		}
 		u.accessMerchant()
@@ -75,10 +79,13 @@ func (u *character) accessMerchant() {
 			u.addInventory(fireSpellBook) // Ajoute le Livre de Sort dans l'inventaire
 			u.purse -= fireSpellBookPrice // Déduit le coût du livre de la bourse
 			fireSpellBookBought = true    // Le livre est marqué comme acheté
+			clear()
 			fmt.Printf("Vous avez acheté le Livre de Sort: Boule de Feu pour %d pièces d'or.\n", fireSpellBookPrice)
 		} else if fireSpellBookBought {
+			clear()
 			fmt.Println("Vous avez déjà acheté ce livre.")
 		} else {
+			clear()
 			fmt.Println("Vous n'avez pas assez d'argent.")
 		}
 		u.accessMerchant()
@@ -88,6 +95,7 @@ func (u *character) accessMerchant() {
 		loop()
 
 	default:
+		clear()
 		fmt.Println("Choix non valide")
 		u.accessMerchant()
 	}
