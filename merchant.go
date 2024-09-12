@@ -10,7 +10,7 @@ var quant_2 int = 3
 func (u *character) accessMerchant() {
 	clear()
 	if healthPotAvailable || poisonPotAvailable {
-		fmt.Println("╒═════╡Marchand╞═════╕")
+		fmt.Printf("╒══════════╡Marchand╞══════════╕\n \tPurse : %d\n", u.purse)
 		if healthPotAvailable {
 			fmt.Println(" 1. - Health Pot (gratuit) ⨯ 1")
 		} else {
@@ -21,9 +21,12 @@ func (u *character) accessMerchant() {
 		} else {
 			fmt.Println(" ̶2̶.̶ ̶-̶ ̶P̶o̶i̶s̶o̶n̶ ̶P̶o̶t̶ ̶(̶0̶)̶ ̶⨯̶ ̶0̶")
 		}
+		fmt.Println("╘══════════════════════════════╛")
 		fmt.Println("Tapez 'exit' pour quitter le marchand")
 	} else {
-		fmt.Println("Le marchand n'a plus de potions.")
+		fmt.Printf("╒══════════╡Marchand╞══════════╕\n Purse : %d\n", u.purse)
+		fmt.Println("Le marchand n'a plus rien a proposer.")
+		fmt.Println("╘══════════════════════════════╛")
 		fmt.Println("Tapez 'exit' pour quitter le marchand")
 	}
 

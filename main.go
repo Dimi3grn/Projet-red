@@ -7,4 +7,5 @@ func main() {
 	loop()      // Starts the game loop
 	fmt.Println("test")
 	fmt.Println("test")
+	fmt.Println("test")
 }
