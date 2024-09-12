@@ -45,13 +45,16 @@ func (u *character) removeInventory(item obj) {
 
 func (u *character) accessInventory() {
 	clear()
-	fmt.Printf("╒══════════╡Votre inventaire╞══════════╕\n")
+	red := "\033[31m"
+	yellow := "\033[33m"
+	reset := "\033[0m"
+	fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
 	for cpt, v := range u.inv {
 		fmt.Printf(" .%d - %s ⨯ %d\n",
 			cpt+1, v.name, v.amout)
 	}
-	fmt.Printf("\n vous avez %d/%d objets dans votre inventaire\n╘══════════════════════════════════════╛\n", len(u.inv), u.invSize)
-	fmt.Println("Tapez le numéro de l'objet à utiliser ou 'exit' pour sortir.")
+	fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
+	fmt.Printf("Tapez le numéro de l'objet à utiliser ou %s'exit'%s pour sortir.", red, reset)
 	var choix int
 	fmt.Scan(&choix)
 	if choix == 3 {
