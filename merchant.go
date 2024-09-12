@@ -30,12 +30,12 @@ func (u *character) accessMerchant() {
 			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶")
 		}
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Println("Tapez 'exit' pour quitter le marchand")
+		fmt.Println("╭'exit'\tpour quitter le marchand")
 	} else {
 		fmt.Printf("╒══════════╡Marchand╞══════════╕\n\tPurse : %d\n", u.purse)
 		fmt.Println("Le marchand n'a plus rien a proposer.")
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Println("Tapez 'exit' pour quitter le marchand")
+		fmt.Println("╭'exit'\tpour quitter le marchand")
 	}
 
 	var choix string
