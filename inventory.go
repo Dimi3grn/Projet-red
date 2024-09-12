@@ -41,13 +41,26 @@ func (u *character) removeInventory(item obj) {
 	}
 }
 
-func (u character) accessInventory() {
+func (u *character) accessInventory() {
 	clear()
 	fmt.Printf("╒══════════╡Votre inventaire╞══════════╕\n")
 	for cpt, v := range u.inv {
-		fmt.Printf(" .%d - %s ⨯ %d\n", cpt+1, v.name, v.amout)
+		fmt.Printf(" .%d - %s ⨯ %d\n",
+			cpt+1, v.name, v.amout)
 	}
 	fmt.Printf("\n vous avez %d/%d objets dans votre inventaire\n╘══════════════════════════════════════╛\n", len(u.inv), u.invSize)
+	fmt.Println("Tapez le numéro de l'objet à utiliser ou 'exit' pour sortir.")
+	var choix int
+	fmt.Scan(&choix)
+	if choix == 3 {
+		for i, item := range u.inv {
+			if item.name == "Livre de Sort: Boule de Feu" {
+				u.spellBook("Boule de feu")
+				u.inv = append(u.inv[:i], u.inv[i+1:]...)
+				break
+			}
+		}
+	}
 }
 
 func (u *character) takePot() {
