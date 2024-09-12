@@ -81,6 +81,7 @@ func (u *character) accessMerchant() {
 		u.accessMerchant()
 
 	case "exit":
+		clear()
 		loop()
 
 	default:
