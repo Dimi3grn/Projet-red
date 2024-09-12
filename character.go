@@ -41,10 +41,12 @@ func setclasse() {
 
 func (u character) displayinfo() {
 	clear()
-	fmt.Printf("╒════╡Vos stats╞════╕\n name : %s\n classe : %s\n level : %d\n experience : %d/%d\n hp : %d/%d\n Purse : %d\n",
-		u.name, u.classe, u.lvl, u.exp, 100*u.lvl, u.hp, u.maxHp, u.purse)
+	yellow := "\033[33m"
+	reset := "\033[0m"
+	fmt.Printf("╒════╡%sVos stats%s╞════╕\n name : %s\n classe : %s\n level : %d\n experience : %d/%d\n hp : %d/%d\n Purse : %d\n",
+		yellow, reset, u.name, u.classe, u.lvl, u.exp, 100*u.lvl, u.hp, u.maxHp, u.purse)
 
-	fmt.Print(" Skills :\n ")
+	fmt.Print(" Skills :\n\t")
 	if len(u.skills) > 0 {
 		for i, skill := range u.skills {
 			if i > 0 {
@@ -56,8 +58,8 @@ func (u character) displayinfo() {
 		fmt.Print("Aucun")
 	}
 	fmt.Println("\n╘═══════════════════╛")
-	red := readTer()
-	if red == "exit" {
+	read := readTer()
+	if read == "exit" {
 		clear()
 	}
 }
