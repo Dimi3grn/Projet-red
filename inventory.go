@@ -44,7 +44,6 @@ func (u *character) removeInventory(item obj) {
 }
 
 func (u *character) accessInventory() {
-	clear()
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
@@ -58,6 +57,13 @@ func (u *character) accessInventory() {
 	var choix int
 	fmt.Scan(&choix)
 	if choix == 0 {
+		clear()
+		loop()
+		return
+	}
+	// Si choix == 0, quitter l'inventaire
+	if choix == 0 {
+		clear()
 		loop()
 		return
 	}
@@ -65,12 +71,20 @@ func (u *character) accessInventory() {
 	// Vérifier si le choix est valide
 	if choix > 0 && choix <= len(u.inv) {
 		item := u.inv[choix-1] // Récupérer l'objet choisi
-		if item.name == "Livre de Sort: Boule de Feu" {
+		switch item.name {
+		case "Livre de Sort: Boule de Feu":
 			u.spellBook("Boule de feu")
 			// Retirer l'objet après utilisation
-			u.inv = append(u.inv[:choix-1], u.inv[choix:]...)
+			u.removeInventory(item)
 			fmt.Println("Vous avez appris le sort 'Boule de feu' !")
-		} else {
+
+		case "Health Pot":
+			u.takePot() // Utilise une potion de soin
+
+		case "Poison Pot":
+			u.takePoisonPot() // Utilise une potion de poison
+
+		default:
 			fmt.Println("Cet objet ne peut pas être utilisé.")
 		}
 	} else {
@@ -84,27 +98,44 @@ func (u *character) takePot() {
 	isInside := false
 	cpt := 0
 	for j, k := range u.inv {
-		if k.id == 1 {
+		if k.id == 1 { // ID pour Health Pot
 			isInside = true
 			cpt = j
 		}
 	}
 	if isInside {
 		if u.hp < u.maxHp {
-			u.hp += 5
+			u.hp += 5 // Guérit 5 points de vie
 			if u.hp > u.maxHp {
 				u.hp = u.maxHp
 			}
 			fmt.Printf("Vous avez maintenant %d points de vie\n", u.hp)
-			if u.inv[cpt].amout == 1 {
-				u.inv = append(u.inv[:cpt], u.inv[cpt+1:]...)
-			} else {
-				u.inv[cpt].amout -= 1
-			}
+			u.removeInventory(u.inv[cpt]) // Retirer la potion de l'inventaire
 		} else {
-			fmt.Println("vous êtes déjà à votre limite de vie")
+			fmt.Println("Vous êtes déjà à votre limite de vie.")
 		}
 	} else {
-		fmt.Println("Pas de potions de soin dans l'inventaire")
+		fmt.Println("Pas de potions de soin dans l'inventaire.")
+	}
+}
+
+func (u *character) takePoisonPot() {
+	isInside := false
+	cpt := 0
+	for j, k := range u.inv {
+		if k.id == 2 { // ID pour Poison Pot
+			isInside = true
+			cpt = j
+		}
+	}
+	if isInside {
+		u.hp -= 5 // Inflige 5 points de dégât
+		if u.hp < 0 {
+			u.hp = 0
+		}
+		fmt.Printf("Vous avez maintenant %d points de vie (après avoir utilisé une potion de poison)\n", u.hp)
+		u.removeInventory(u.inv[cpt]) // Retirer la potion de poison de l'inventaire
+	} else {
+		fmt.Println("Pas de potions de poison dans l'inventaire.")
 	}
 }
