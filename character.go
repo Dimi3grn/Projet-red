@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"math/rand"
+<<<<<<< HEAD
 	"strings"
+=======
+>>>>>>> 493c57f14bdffba67e5c0ff604888d10919156f5
 )
 
 type character struct {
@@ -21,61 +24,6 @@ type character struct {
 }
 
 var MyChar character = character{"jack", "elfe", 1, 0, 0, 0, []obj{}, 0, true, 200, nil}
-
-func charCreation() character {
-	var name, class string
-	var validName bool
-
-	// Boucle pour s'assurer que le nom ne contient que des lettres
-	for !validName {
-		fmt.Print("Entrez le nom de votre personnage : ")
-		fmt.Scan(&name)
-		if isValidName(name) {
-			validName = true
-			name = formatName(name) // Formater le nom (Majuscule initiale, reste minuscule)
-		} else {
-			fmt.Println("Le nom ne doit contenir que des lettres.")
-		}
-	}
-
-	// Choisir la classe du personnage
-	for {
-		fmt.Print("Choisissez une classe (Humain, Elfe, Nain) : ")
-		fmt.Scan(&class)
-		class = strings.ToLower(class)
-		if class == "humain" || class == "elfe" || class == "nain" {
-			class = formatName(class) // Formater la classe avec une majuscule au début
-			break
-		} else {
-			fmt.Println("Classe invalide. Choisissez entre Humain, Elfe ou Nain.")
-		}
-	}
-
-	// Initialisation du personnage selon la classe choisie
-	var maxHp int
-	switch class {
-	case "Humain":
-		maxHp = 100
-	case "Elfe":
-		maxHp = 80
-	case "Nain":
-		maxHp = 120
-	}
-
-	// Création du personnage
-	player := character{
-		name:    name,
-		class:   class,
-		hp:      maxHp / 2, // Points de vie actuels à 50%
-		maxHp:   maxHp,
-		level:   1,               // Niveau de départ
-		spell:   "Coup de Poing", // Sort de départ
-		invSize: 10,              // Taille de l'inventaire par défaut (modifiable selon besoin)
-	}
-
-	fmt.Printf("Bienvenue %s, le %s ! Vous avez %d/%d points de vie.\n", player.name, player.class, player.hp, player.maxHp)
-	return player
-}
 
 func setclasse() {
 	rng := rand.Intn(3)
