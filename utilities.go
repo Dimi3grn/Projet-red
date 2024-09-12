@@ -13,6 +13,7 @@ func readTer() string {
 }
 
 func loop() {
+	clear()
 	fmt.Println("╭'menu' pour acceder au menu\n╰'exit' pour quitter le jeu")
 	valeur := readTer()
 	if valeur == "menu" {
@@ -40,7 +41,7 @@ func accessMenu() {
 		loop()
 	case "inv":
 		MyChar.accessInventory()
-		fmt.Println("⎸'hp' pour récuperer hp à partir des Heatlh Pot")
+		fmt.Println("╭'hp' pour récuperer hp à partir des Heatlh Pot\n╰'exit' pour quitter")
 		rep := readTer()
 		if rep == "hp" {
 			MyChar.takePot()
