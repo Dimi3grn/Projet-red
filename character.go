@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 type character struct {
@@ -21,6 +22,14 @@ type character struct {
 var MyChar character = character{"jack", "elfe", 1, 0, 0, 0, []obj{}, 0, true, 200, nil}
 
 func setclasse() {
+	rng := rand.Intn(3)
+	if rng == 1 {
+		MyChar.classe = "humain"
+	} else if rng == 2 {
+		MyChar.classe = "elfe"
+	} else {
+		MyChar.classe = "nain"
+	}
 	if MyChar.classe == "humain" {
 		MyChar.maxHp = MyChar.lvl * 20
 		MyChar.invSize = 10
