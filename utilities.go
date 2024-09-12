@@ -36,7 +36,7 @@ func accessMenu() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	var option string
-	fmt.Printf("\tvous êtes dans le menu\n%s╭%s'stats'%s pour afficher les satistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s╰%s'exit'%s pour quitter\n", yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
+	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les satistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
@@ -49,15 +49,15 @@ func accessMenu() {
 		MyChar.displayinfo()
 		loop()
 	case "inv":
+		clear()
 		MyChar.accessInventory()
-		fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Heatlh Pot\n%s╰%s'exit'%s pour quitter\n", yellow, red, reset, yellow, red, reset)
 		rep := readTer()
 		if rep == "hp" {
 			MyChar.takePot()
 		}
 		loop()
 	case "exit":
-		fmt.Println("exited")
+		clear()
 		loop()
 	default:
 		fmt.Println("commande invalide")

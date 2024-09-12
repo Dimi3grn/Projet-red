@@ -53,7 +53,8 @@ func (u *character) accessInventory() {
 			yellow, cpt+1, reset, v.name, v.amout)
 	}
 	fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
-	fmt.Printf("Tapez le numéro de l'objet à utiliser ou %s'exit'%s pour sortir.\n", red, reset)
+	fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
+	fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Heatlh Pot\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
 	var choix int
 	fmt.Scan(&choix)
 	if choix == 0 {

@@ -41,11 +41,11 @@ func setclasse() {
 
 func (u character) displayinfo() {
 	clear()
+	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	fmt.Printf("╒════╡%sVos stats%s╞════╕\n name : %s\n classe : %s\n level : %d\n experience : %d/%d\n hp : %d/%d\n Purse : %d\n",
 		yellow, reset, u.name, u.classe, u.lvl, u.exp, 100*u.lvl, u.hp, u.maxHp, u.purse)
-
 	fmt.Print(" Skills :\n    ")
 	if len(u.skills) > 0 {
 		for i, skill := range u.skills {
@@ -57,7 +57,7 @@ func (u character) displayinfo() {
 	} else {
 		fmt.Print("Aucun")
 	}
-	fmt.Println("\n╘═══════════════════╛")
+	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	read := readTer()
 	if read == "exit" {
 		clear()
