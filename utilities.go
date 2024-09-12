@@ -25,6 +25,7 @@ func loop() {
 		clear()
 		fmt.Println("exit the game successfully")
 	} else {
+		clear()
 		loop()
 	}
 }

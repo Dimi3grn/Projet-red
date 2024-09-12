@@ -10,7 +10,6 @@ var fireSpellBookPrice int = 100     // Prix du livre
 var fireSpellBookBought bool = false // Statut d'achat
 
 func (u *character) accessMerchant() {
-	clear()
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
