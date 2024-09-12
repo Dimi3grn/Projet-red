@@ -27,7 +27,7 @@ func loop() {
 func accessMenu() {
 	clear()
 	var option string
-	fmt.Println("\tvous êtes dans le menu\n╭'stats' pour afficher les satistiques\n⎸'mark' pour afficher le marchand\n⎸'inv' pour afficher l'inventaire, ╰'exit' pour quitter")
+	fmt.Println("\tvous êtes dans le menu\n╭'stats' pour afficher les satistiques\n⎸'mark' pour afficher le marchand\n⎸'inv' pour afficher l'inventaire\n╰'exit' pour quitter")
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
