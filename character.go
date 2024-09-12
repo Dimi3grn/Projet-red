@@ -19,7 +19,7 @@ type character struct {
 	skills  []string
 }
 
-var MyChar character = character{"jack", "elfe", 1, 0, 0, 0, []obj{}, 0, true, 200, nil}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{}, 0, true, 200, nil}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -66,7 +66,7 @@ func (u character) displayinfo() {
 	} else {
 		fmt.Print("Aucun")
 	}
-	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
+	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter l'Inventaire\n", yellow, red, reset)
 	read := readTer()
 	if read == "exit" {
 		clear()
