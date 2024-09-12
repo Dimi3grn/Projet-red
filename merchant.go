@@ -6,7 +6,6 @@ var healthPotAvailable bool = true
 var poisonPotAvailable bool = true
 var price_2 int = 50
 var quant_2 int = 3
-var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book"}
 var fireSpellBookPrice int = 100     // Prix du livre
 var fireSpellBookBought bool = false // Statut d'achat
 
