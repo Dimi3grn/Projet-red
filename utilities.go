@@ -13,7 +13,6 @@ func readTer() string {
 }
 
 func loop() {
-	clear()
 	fmt.Println("╭'menu' pour acceder au menu\n╰'exit' pour quitter le jeu")
 	valeur := readTer()
 	if valeur == "menu" {
