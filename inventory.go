@@ -11,7 +11,9 @@ type obj struct {
 
 var obj1 obj = obj{1, "Health Pot", 1, "Consumable"}
 var obj2 obj = obj{2, "Poison Pot", 1, "Consumable"}
-var obj3 obj = obj{3, "Sword", 1, "Equipement"}
+
+//var obj3 obj = obj{3, "Sword", 1, "Equipement"}
+var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book"}
 
 func (u *character) addInventory(item obj) {
 	if len(u.inv) < u.invSize {

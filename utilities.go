@@ -20,6 +20,7 @@ func loop() {
 	} else if valeur == "exit" {
 		fmt.Println("exit the game successfully")
 	} else {
+		clear()
 		loop()
 	}
 }
@@ -47,6 +48,7 @@ func accessMenu() {
 		}
 		loop()
 	case "exit":
+		clear()
 		fmt.Println("exited")
 		loop()
 	default:
