@@ -13,14 +13,16 @@ func readTer() string {
 }
 
 func loop() {
+	clear()
 	fmt.Println("╭'menu' pour acceder au menu\n╰'exit' pour quitter le jeu")
 	valeur := readTer()
 	if valeur == "menu" {
+		clear()
 		accessMenu()
 	} else if valeur == "exit" {
+		clear()
 		fmt.Println("exit the game successfully")
 	} else {
-		clear()
 		loop()
 	}
 }
@@ -28,7 +30,7 @@ func loop() {
 func accessMenu() {
 	clear()
 	var option string
-	fmt.Println("\tvous êtes dans le menu\n╭'stats' pour afficher les satistiques\n│'mark' pour afficher le marchand\n│'inv' pour afficher l'inventaire\n╰'exit' pour quitter")
+	fmt.Println("\tvous êtes dans le menu\n╭'stats' pour afficher les satistiques\n⎸'mark' pour afficher le marchand\n⎸'inv' pour afficher l'inventaire\n╰'exit' pour quitter")
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
@@ -48,7 +50,6 @@ func accessMenu() {
 		}
 		loop()
 	case "exit":
-		clear()
 		fmt.Println("exited")
 		loop()
 	default:
