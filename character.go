@@ -3,10 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-<<<<<<< HEAD
-	"strings"
-=======
->>>>>>> 493c57f14bdffba67e5c0ff604888d10919156f5
 )
 
 type character struct {
