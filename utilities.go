@@ -13,8 +13,10 @@ func readTer() string {
 }
 
 func loop() {
-	clear()
-	fmt.Println("╭'menu' pour acceder au menu\n╰'exit' pour quitter le jeu")
+	red := "\033[31m"
+	yellow := "\033[33m"
+	reset := "\033[0m"
+	fmt.Printf("%s╭%s'menu'%s pour acceder au menu\n%s╰%s'exit'%s pour quitter le jeu\n", yellow, red, reset, yellow, red, reset)
 	valeur := readTer()
 	if valeur == "menu" {
 		clear()
@@ -29,8 +31,11 @@ func loop() {
 
 func accessMenu() {
 	clear()
+	red := "\033[31m"
+	yellow := "\033[33m"
+	reset := "\033[0m"
 	var option string
-	fmt.Println("\tvous êtes dans le menu\n╭'stats' pour afficher les satistiques\n⎸'mark' pour afficher le marchand\n⎸'inv' pour afficher l'inventaire\n╰'exit' pour quitter")
+	fmt.Printf("\tvous êtes dans le menu\n%s╭%s'stats'%s pour afficher les satistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s╰%s'exit'%s pour quitter\n", yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
@@ -43,7 +48,7 @@ func accessMenu() {
 		loop()
 	case "inv":
 		MyChar.accessInventory()
-		fmt.Println("╭'hp' pour récuperer hp à partir des Heatlh Pot\n╰'exit' pour quitter")
+		fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Heatlh Pot\n%s╰%s'exit'%s pour quitter\n", yellow, red, reset, yellow, red, reset)
 		rep := readTer()
 		if rep == "hp" {
 			MyChar.takePot()

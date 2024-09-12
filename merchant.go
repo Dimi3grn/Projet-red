@@ -10,30 +10,34 @@ var fireSpellBookPrice int = 100     // Prix du livre
 var fireSpellBookBought bool = false // Statut d'achat
 
 func (u *character) accessMerchant() {
+	clear()
+	red := "\033[31m"
+	yellow := "\033[33m"
+	reset := "\033[0m"
 	if healthPotAvailable || poisonPotAvailable || !fireSpellBookBought {
-		fmt.Printf("╒══════════╡Marchand╞══════════╕\n \tPurse : %d\n", u.purse)
+		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 		if healthPotAvailable {
-			fmt.Println(" 1. - Health Pot (gratuit) ⨯ 1")
+			fmt.Printf(" %s1.%s - Health Pot (gratuit) ⨯ 1\n", yellow, reset)
 		} else {
 			fmt.Println(" ̶1̶.̶ ̶-̶ ̶H̶e̶a̶l̶t̶h̶ ̶P̶o̶t̶ ̶(̶g̶r̶a̶t̶u̶i̶t̶)̶ ̶⨯̶ ̶0̶")
 		}
 		if poisonPotAvailable {
-			fmt.Printf(" 2. - Poison Pot (%d) ⨯ %d\n", price_2, quant_2)
+			fmt.Printf(" %s2.%s - Poison Pot (%d) ⨯ %d\n", yellow, reset, price_2, quant_2)
 		} else {
 			fmt.Println(" ̶2̶.̶ ̶-̶ ̶P̶o̶i̶s̶o̶n̶ ̶P̶o̶t̶ ̶(̶0̶)̶ ̶⨯̶ ̶0̶")
 		}
 		if !fireSpellBookBought {
-			fmt.Printf(" 3. - Livre de Sort: Boule de Feu (%d pièces d'or)\n", fireSpellBookPrice)
+			fmt.Printf(" %s3.%s - Livre de Sort: Boule de Feu (%d pièces d'or)\n", yellow, reset, fireSpellBookPrice)
 		} else {
 			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶")
 		}
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Println("⎸'exit'\tpour quitter le marchand")
+		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	} else {
-		fmt.Printf("╒══════════╡Marchand╞══════════╕\n\tPurse : %d\n", u.purse)
+		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 		fmt.Println("Le marchand n'a plus rien a proposer.")
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Println("│'exit'\tpour quitter le marchand")
+		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	}
 
 	var choix string
