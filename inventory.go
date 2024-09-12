@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type obj struct {
 	id    int
@@ -12,7 +15,7 @@ type obj struct {
 var obj1 obj = obj{1, "Health Pot", 1, "Consumable"}
 var obj2 obj = obj{2, "Poison Pot", 1, "Consumable"}
 
-//var obj3 obj = obj{3, "Sword", 1, "Equipement"}
+// var obj3 obj = obj{3, "Sword", 1, "Equipement"}
 var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book"}
 
 func (u *character) addInventory(item obj) {
@@ -132,12 +135,28 @@ func (u *character) takePoisonPot() {
 		}
 	}
 	if isInside {
-		u.hp -= 5 // Inflige 5 points de dégât
-		if u.hp < 0 {
-			u.hp = 0
+		fmt.Println("Vous avez bu une potion de poison !")
+
+		// Inflige 3 dégâts par seconde pendant 3 secondes (pour un total de 9 dégâts)
+		for i := 0; i < 3; i++ {
+			time.Sleep(1 * time.Second) // Délai de 1 seconde entre chaque tick
+			u.hp -= 3                   // Inflige 3 points de dégâts
+
+			// Vérifier si le joueur est mort
+			if u.hp <= 0 {
+				u.hp = 0
+				fmt.Println("Vous êtes mort suite aux effets du poison.")
+				u.dead() // Appelle la fonction "dead" si le joueur est mort
+				return
+			}
+
+			fmt.Printf("Vous avez %d points de vie après %d secondes de poison.\n", u.hp, i+1)
 		}
-		fmt.Printf("Vous avez maintenant %d points de vie (après avoir utilisé une potion de poison)\n", u.hp)
-		u.removeInventory(u.inv[cpt]) // Retirer la potion de poison de l'inventaire
+
+		fmt.Printf("Le poison s'est dissipé. Vous avez %d points de vie.\n", u.hp)
+
+		// Retirer la potion de poison de l'inventaire après utilisation
+		u.removeInventory(u.inv[cpt])
 	} else {
 		fmt.Println("Pas de potions de poison dans l'inventaire.")
 	}
