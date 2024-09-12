@@ -2,11 +2,8 @@ package main
 
 import (
 	"fmt"
-<<<<<<< HEAD
 	"math/rand"
-=======
 	"strings"
->>>>>>> b572424867b0f521d278cdcaa75af2ca5e23b621
 )
 
 type character struct {
