@@ -24,7 +24,7 @@ func (u *character) accessMerchant() {
 		fmt.Println("╘══════════════════════════════╛")
 		fmt.Println("Tapez 'exit' pour quitter le marchand")
 	} else {
-		fmt.Printf("╒══════════╡Marchand╞══════════╕\n Purse : %d\n", u.purse)
+		fmt.Printf("╒══════════╡Marchand╞══════════╕\n\tPurse : %d\n", u.purse)
 		fmt.Println("Le marchand n'a plus rien a proposer.")
 		fmt.Println("╘══════════════════════════════╛")
 		fmt.Println("Tapez 'exit' pour quitter le marchand")
