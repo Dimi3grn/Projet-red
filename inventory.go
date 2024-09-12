@@ -42,57 +42,58 @@ func (u *character) removeInventory(item obj) {
 		}
 	}
 }
-
 func (u *character) accessInventory() {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
-	fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
-	for cpt, v := range u.inv {
-		fmt.Printf(" %s.%d%s - %s ⨯ %d\n",
-			yellow, cpt+1, reset, v.name, v.amout)
-	}
-	fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
-	fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
-	fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Heatlh Pot\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
-	var choix int
-	fmt.Scan(&choix)
-	if choix == 0 {
-		clear()
-		loop()
-		return
-	}
-	// Si choix == 0, quitter l'inventaire
-	if choix == 0 {
-		clear()
-		loop()
-		return
-	}
+	for {
 
-	// Vérifier si le choix est valide
-	if choix > 0 && choix <= len(u.inv) {
-		item := u.inv[choix-1] // Récupérer l'objet choisi
+		fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
+		for cpt, v := range u.inv {
+			fmt.Printf(" %s.%d%s - %s ⨯ %d\n",
+				yellow, cpt+1, reset, v.name, v.amout)
+		}
+		fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
+		fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
+		fmt.Printf("%s╭%s'hp'%s pour récuperer hp à partir des Health Pot\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
+
+		var choix string
+		fmt.Scan(&choix)
+
+		if choix == "exit" {
+			clear()
+			loop() // Retourne au menu principal
+			return
+		}
+
+		// Tenter de convertir l'entrée en un entier
+		var choixInt int
+		_, err := fmt.Sscanf(choix, "%d", &choixInt)
+		if err != nil || choixInt <= 0 || choixInt > len(u.inv) {
+			fmt.Println("Choix invalide, veuillez réessayer.")
+			continue // Rester dans le menu si l'entrée est invalide
+		}
+
+		item := u.inv[choixInt-1] // Récupérer l'objet choisi
 		switch item.name {
 		case "Livre de Sort: Boule de Feu":
+			clear()
 			u.spellBook("Boule de feu")
-			// Retirer l'objet après utilisation
 			u.removeInventory(item)
 			fmt.Println("Vous avez appris le sort 'Boule de feu' !")
-
 		case "Health Pot":
-			u.takePot() // Utilise une potion de soin
+			clear()
+			u.takePot()
 
 		case "Poison Pot":
-			u.takePoisonPot() // Utilise une potion de poison
-
+			clear()
+			u.takePoisonPot()
 		default:
 			fmt.Println("Cet objet ne peut pas être utilisé.")
 		}
-	} else {
-		fmt.Println("Choix invalide.")
-	}
 
-	u.accessInventory() // Réafficher l'inventaire après interaction
+		// Réafficher l'inventaire après chaque action
+	}
 }
 
 func (u *character) takePot() {
