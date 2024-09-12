@@ -42,6 +42,7 @@ func accessMenu() {
 	case "dmg":
 		MyChar.takeDamage(1)
 	case "mark":
+		clear()
 		MyChar.accessMerchant()
 		loop()
 	case "stats":
