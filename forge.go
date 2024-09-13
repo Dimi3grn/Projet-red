@@ -14,9 +14,20 @@ func (u *character) accessBlacksmith() {
 	reset := "\033[0m"
 
 	fmt.Printf("╒══════════╡%sForgeron%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
-	fmt.Printf("%s╭%s1.%s Fabriquer un Chapeau de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
-	fmt.Printf("%s│%s2.%s Fabriquer une Tunique de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
-	fmt.Printf("%s╰%s3.%s Fabriquer des Bottes de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
+
+	// Afficher les options de craft avec les ingrédients et le nombre d'objets dans l'inventaire
+	fmt.Printf("%s╭%s1.%s Fabriquer un Chapeau de l'aventurier (5 $)\n", yellow, red, reset)
+	fmt.Printf("   - 1 Plume de Corbeau (%d)\n", u.checkInventory("Plume de Corbeau"))
+	fmt.Printf("   - 1 Cuir de Sanglier (%d)\n", u.checkInventory("Cuir de Sanglier"))
+
+	fmt.Printf("%s│%s2.%s Fabriquer une Tunique de l'aventurier (5 $)\n", yellow, red, reset)
+	fmt.Printf("   - 2 Fourrure de Loup (%d)\n", u.checkInventory("Fourrure de Loup"))
+	fmt.Printf("   - 1 Peau de Troll (%d)\n", u.checkInventory("Peau de Troll"))
+
+	fmt.Printf("%s╰%s3.%s Fabriquer des Bottes de l'aventurier (5 $)\n", yellow, red, reset)
+	fmt.Printf("   - 1 Fourrure de Loup (%d)\n", u.checkInventory("Fourrure de Loup"))
+	fmt.Printf("   - 1 Cuir de Sanglier (%d)\n", u.checkInventory("Cuir de Sanglier"))
+
 	fmt.Printf("%s'menu'%s. Retour au menu principal\n", red, reset)
 
 	var choix string
@@ -29,10 +40,7 @@ func (u *character) accessBlacksmith() {
 		u.craftAdventureTunic()
 	case "3":
 		u.craftAdventureBoots()
-	case "m":
-		clear()
-		loop()
-	case "menu":
+	case "m", "menu":
 		clear()
 		loop()
 	default:
@@ -99,7 +107,7 @@ func (u *character) checkInventory(itemName string) int {
 	count := 0
 	for _, item := range u.inv {
 		if item.name == itemName {
-			count++
+			count += item.amout
 		}
 	}
 	return count
