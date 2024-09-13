@@ -70,6 +70,8 @@ func (u character) displayinfo() {
 	read := readTer()
 	if read == "exit" {
 		clear()
+	} else if read == "e" {
+		clear()
 	} else {
 		clear()
 		u.displayinfo()

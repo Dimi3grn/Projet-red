@@ -24,7 +24,14 @@ func loop() {
 	if valeur == "menu" {
 		clear()
 		accessMenu()
+	} else if valeur == "m" {
+		clear()
+		accessMenu()
 	} else if valeur == "exit" {
+		clear()
+		fmt.Println("exit the game successfully")
+		os.Exit(0)
+	} else if valeur == "e" {
 		clear()
 		fmt.Println("exit the game successfully")
 		os.Exit(0)
@@ -49,18 +56,38 @@ func accessMenu() {
 		clear()
 		MyChar.accessMerchant()
 		loop()
+	case "m":
+		clear()
+		MyChar.accessMerchant()
+		loop()
 	case "stats":
+		clear()
+		MyChar.displayinfo()
+		loop()
+	case "s":
+		clear()
 		MyChar.displayinfo()
 		loop()
 	case "inv":
 		clear()
 		MyChar.accessInventory()
 		rep := readTer()
-		if rep == "hp" {
+		if rep == "hp" || rep == "h" {
+			MyChar.takePot()
+		}
+		loop()
+	case "i":
+		clear()
+		MyChar.accessInventory()
+		rep := readTer()
+		if rep == "hp" || rep == "h" {
 			MyChar.takePot()
 		}
 		loop()
 	case "exit":
+		clear()
+		loop()
+	case "e":
 		clear()
 		loop()
 	default:
