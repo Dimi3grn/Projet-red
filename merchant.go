@@ -218,6 +218,10 @@ func (u *character) accessMerchant() {
 		clear()
 		fmt.Println("Vous quittez le marchand.")
 		return
+	case "e":
+		clear()
+		fmt.Println("Vous quittez le marchand.")
+		return
 
 	default:
 		clear()

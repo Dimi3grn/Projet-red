@@ -67,6 +67,10 @@ func (u *character) accessInventory() {
 			clear()
 			loop() // Retourne au menu principal
 			return
+		} else if choix == "e" {
+			clear()
+			loop() // Retourne au menu principal
+			return
 		}
 
 		// Tenter de convertir l'entrée en un entier
