@@ -36,42 +36,50 @@ func (u *character) accessMerchant() {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
+	green := "\033[32m"
 	if healthPotAvailable || poisonPotAvailable || !fireSpellBookBought || wolfFurAvailable || trollSkinAvailable || boarLeatherAvailable || ravenFeatherAvailable {
 		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
+
 		if healthPotAvailable {
-			fmt.Printf(" %s1.%s - Potion de vie (%d $) ⨯ %d\n", yellow, reset, healthPotPrice, quant_healthPot)
+			fmt.Printf(" %s1.%s - Potion de vie (%s%d $%s) ⨯ %d\n", yellow, reset, green, healthPotPrice, reset, quant_healthPot)
 		} else {
-			fmt.Println(" ̶1̶.̶ ̶-̶ ̶P̶o̶t̶i̶o̶n̶ ̶d̶e̶ ̶v̶i̶e̶ ̶(̶g̶r̶a̶t̶u̶i̶t̶)̶ ̶⨯̶ ̶0̶")
+			fmt.Println(" ̶1̶.̶ ̶-̶ ̶P̶o̶t̶i̶o̶n̶ ̶d̶e̶ ̶v̶i̶e̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+
 		if poisonPotAvailable {
-			fmt.Printf(" %s2.%s - Potion de poison (%d $) ⨯ %d\n", yellow, reset, poisonPotPrice, quant_poisonPot)
+			fmt.Printf(" %s2.%s - Potion de poison (%s%d $%s) ⨯ %d\n", yellow, reset, green, poisonPotPrice, reset, quant_poisonPot)
 		} else {
-			fmt.Println(" ̶2̶.̶ ̶-̶ ̶P̶o̶i̶s̶o̶n̶ ̶P̶o̶t̶ ̶(̶0̶)̶ ̶⨯̶ ̶0̶")
+			fmt.Println(" ̶2̶.̶ ̶-̶ ̶P̶o̶t̶i̶o̶n̶ ̶d̶e̶ ̶p̶o̶i̶s̶o̶n̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+
 		if !fireSpellBookBought {
-			fmt.Printf(" %s3.%s - Livre de Sort: Boule de Feu (%d $)\n", yellow, reset, fireSpellBookPrice)
+			fmt.Printf(" %s3.%s - Livre de Sort: Boule de Feu (%s%d $%s)\n", yellow, reset, green, fireSpellBookPrice, reset)
 		} else {
-			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶ ⨯̶ ̶0̶")
+			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶ ̶(̶0̶ ̶$̶)")
 		}
+
 		if wolfFurAvailable {
-			fmt.Printf(" %s4.%s - Fourrure de Loup (%d $) ⨯ %d\n", yellow, reset, wolfFurPrice, quant_wolfFur)
+			fmt.Printf(" %s4.%s - Fourrure de Loup (%s%d $%s) ⨯ %d\n", yellow, reset, green, wolfFurPrice, reset, quant_wolfFur)
 		} else {
-			fmt.Println(" ̶4̶.̶ ̶-̶ ̶F̶o̶u̶r̶r̶u̶r̶e̶ ̶d̶e̶ ̶L̶o̶u̶p̶ ⨯̶ ̶0̶")
+			fmt.Println(" ̶4̶.̶ ̶-̶ ̶F̶o̶u̶r̶r̶u̶r̶e̶ ̶d̶e̶ ̶L̶o̶u̶p̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+
 		if trollSkinAvailable {
-			fmt.Printf(" %s5.%s - Peau de Troll (%d $) ⨯ %d\n", yellow, reset, trollSkinPrice, quant_trollSkin)
+			fmt.Printf(" %s5.%s - Peau de Troll (%s%d $%s) ⨯ %d\n", yellow, reset, green, trollSkinPrice, reset, quant_trollSkin)
 		} else {
-			fmt.Println(" ̶5̶.̶ ̶-̶ ̶P̶e̶a̶u̶ ̶d̶e̶ ̶T̶r̶o̶l̶l̶ ⨯̶ ̶0̶")
+			fmt.Println(" ̶5̶.̶ ̶-̶ ̶P̶e̶a̶u̶ ̶d̶e̶ ̶T̶r̶o̶l̶l̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+
 		if boarLeatherAvailable {
-			fmt.Printf(" %s6.%s - Cuir de Sanglier (%d $) ⨯ %d\n", yellow, reset, boarLeatherPrice, quant_boarLeather)
+			fmt.Printf(" %s6.%s - Cuir de Sanglier (%s%d $%s) ⨯ %d\n", yellow, reset, green, boarLeatherPrice, reset, quant_boarLeather)
 		} else {
-			fmt.Println(" ̶6̶.̶ ̶-̶ ̶C̶u̶i̶r̶ ̶d̶e̶ ̶S̶a̶n̶g̶l̶i̶e̶r̶ ⨯̶ ̶0̶")
+			fmt.Println(" ̶6̶.̶ ̶-̶ ̶C̶u̶i̶r̶ ̶d̶e̶ ̶S̶a̶n̶g̶l̶i̶e̶r̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+
 		if ravenFeatherAvailable {
-			fmt.Printf(" %s7.%s - Plume de Corbeau (%d $) ⨯ %d\n", yellow, reset, ravenFeatherPrice, quant_ravenFeather)
+			fmt.Printf(" %s7.%s - Plume de Corbeau (%s%d $%s) ⨯ %d\n", yellow, reset, green, ravenFeatherPrice, reset, quant_ravenFeather)
 		} else {
-			fmt.Println(" ̶7̶.̶ ̶-̶ ̶P̶l̶u̶m̶e̶ ̶d̶e̶ ̶C̶o̶r̶b̶e̶a̶u̶ ⨯̶ ̶0̶")
+			fmt.Println(" ̶7̶.̶ ̶-̶ ̶P̶l̶u̶m̶e̶ ̶d̶e̶ ̶C̶o̶r̶b̶e̶a̶u̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
 		fmt.Println("╘══════════════════════════════╛")
 		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
