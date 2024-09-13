@@ -12,21 +12,46 @@ func (u *character) accessBlacksmith() {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
+	green := "\033[32m"
 
 	fmt.Printf("╒══════════╡%sForgeron%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 
 	// Afficher les options de craft avec les ingrédients et le nombre d'objets dans l'inventaire
-	fmt.Printf("%s╭%s1.%s Fabriquer un Chapeau de l'aventurier (5 $)\n", yellow, red, reset)
-	fmt.Printf("   - 1 Plume de Corbeau (%d)\n", u.checkInventory("Plume de Corbeau"))
-	fmt.Printf("   - 1 Cuir de Sanglier (%d)\n", u.checkInventory("Cuir de Sanglier"))
+	fmt.Printf("%s╭%s1.%s Fabriquer un Chapeau de l'aventurier (%s5 $%s)\n", yellow, red, reset, green, reset)
+	if u.checkInventory("Plume de Corbeau") >= 1 {
+		fmt.Printf("%s│%s  - 1 Plume de Corbeau (%s%d%s)\n", yellow, reset, green, u.checkInventory("Plume de Corbeau"), reset)
+	} else {
+		fmt.Printf("%s│%s  - 1 Plume de Corbeau (%s%d%s)\n", yellow, reset, red, u.checkInventory("Plume de Corbeau"), reset)
+	}
+	if u.checkInventory("Cuir de Sanglier") >= 1 {
+		fmt.Printf("%s│%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, green, u.checkInventory("Cuir de Sanglier"), reset)
+	} else {
+		fmt.Printf("%s│%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, red, u.checkInventory("Cuir de Sanglier"), reset)
+	}
 
-	fmt.Printf("%s│%s2.%s Fabriquer une Tunique de l'aventurier (5 $)\n", yellow, red, reset)
-	fmt.Printf("   - 2 Fourrure de Loup (%d)\n", u.checkInventory("Fourrure de Loup"))
-	fmt.Printf("   - 1 Peau de Troll (%d)\n", u.checkInventory("Peau de Troll"))
+	fmt.Printf("%s│%s2.%s Fabriquer une Tunique de l'aventurier (%s5 $%s)\n", yellow, red, reset, green, reset)
+	if u.checkInventory("Fourrure de Loup") >= 2 {
+		fmt.Printf("%s│%s  - 2 Fourrure de Loup (%s%d%s)\n", yellow, reset, green, u.checkInventory("Fourrure de Loup"), reset)
+	} else {
+		fmt.Printf("%s│%s  - 2 Fourrure de Loup (%s%d%s)\n", yellow, reset, red, u.checkInventory("Fourrure de Loup"), reset)
+	}
+	if u.checkInventory("Peau de Troll") >= 1 {
+		fmt.Printf("%s│%s  - 1 Peau de Troll (%s%d%s)\n", yellow, reset, green, u.checkInventory("Peau de Troll"), reset)
+	} else {
+		fmt.Printf("%s│%s  - 1 Peau de Troll (%s%d%s)\n", yellow, reset, red, u.checkInventory("Peau de Troll"), reset)
+	}
 
-	fmt.Printf("%s╰%s3.%s Fabriquer des Bottes de l'aventurier (5 $)\n", yellow, red, reset)
-	fmt.Printf("   - 1 Fourrure de Loup (%d)\n", u.checkInventory("Fourrure de Loup"))
-	fmt.Printf("   - 1 Cuir de Sanglier (%d)\n", u.checkInventory("Cuir de Sanglier"))
+	fmt.Printf("%s│%s3.%s Fabriquer des Bottes de l'aventurier (%s5 $%s)\n", yellow, red, reset, green, reset)
+	if u.checkInventory("Fourrure de Loup") >= 1 {
+		fmt.Printf("%s│%s  - 1 Fourrure de Loup (%s%d%s)\n", yellow, reset, green, u.checkInventory("Fourrure de Loup"), reset)
+	} else {
+		fmt.Printf("%s│%s  - 1 Fourrure de Loup (%s%d%s)\n", yellow, reset, red, u.checkInventory("Fourrure de Loup"), reset)
+	}
+	if u.checkInventory("Cuir de Sanglier") >= 1 {
+		fmt.Printf("%s╰%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, green, u.checkInventory("Cuir de Sanglier"), reset)
+	} else {
+		fmt.Printf("%s╰%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, red, u.checkInventory("Cuir de Sanglier"), reset)
+	}
 
 	fmt.Printf("%s'menu'%s. Retour au menu principal\n", red, reset)
 
