@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 // Ajout des nouveaux objets à fabriquer
-var adventureHat obj = obj{9, "Chapeau de l'aventurier", 1, "Equipement"}
-var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "Equipement"}
-var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "Equipement"}
+var adventureHat obj = obj{9, "Chapeau de l'aventurier", 1, "Equipement", 0}
+var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "Equipement", 0}
+var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "Equipement", 0}
 
 // Accès au forgeron
 func (u *character) accessBlacksmith() {
@@ -53,7 +53,7 @@ func (u *character) accessBlacksmith() {
 		fmt.Printf("%s╰%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, red, u.checkInventory("Cuir de Sanglier"), reset)
 	}
 
-	fmt.Printf("%s'menu'%s. Retour au menu principal\n", red, reset)
+	fmt.Printf("%s'exit'%s. Retour au menu principal\n", red, reset)
 
 	var choix string
 	fmt.Scan(&choix)
@@ -65,7 +65,7 @@ func (u *character) accessBlacksmith() {
 		u.craftAdventureTunic()
 	case "3":
 		u.craftAdventureBoots()
-	case "m", "menu":
+	case "e", "exit":
 		clear()
 		loop()
 	default:
@@ -132,7 +132,7 @@ func (u *character) checkInventory(itemName string) int {
 	count := 0
 	for _, item := range u.inv {
 		if item.name == itemName {
-			count += item.amout
+			count += item.amount
 		}
 	}
 	return count

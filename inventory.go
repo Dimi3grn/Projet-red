@@ -6,27 +6,28 @@ import (
 )
 
 type obj struct {
-	id    int
-	name  string
-	amout int
-	cath  string
+	id     int
+	name   string
+	amount int
+	cath   string
+	buff   int
 }
 
-var obj1 obj = obj{1, "Health Pot", 1, "Consumable"}
-var obj2 obj = obj{2, "Poison Pot", 1, "Consumable"}
+var obj1 obj = obj{1, "Health Pot", 1, "Consumable", 0}
+var obj2 obj = obj{2, "Poison Pot", 1, "Consumable", 0}
 
 // var obj3 obj = obj{3, "Sword", 1, "Equipement"}
-var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book"}
+var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book", 0}
 
 func (u *character) addInventory(item obj) {
 	if len(u.inv) < u.invSize {
 		for i, invItem := range u.inv {
 			if invItem.id == item.id {
-				u.inv[i].amout += item.amout
+				u.inv[i].amount += item.amount
 				return
 			}
 		}
-		item.amout = 1
+		item.amount = 1
 		u.inv = append(u.inv, item)
 	} else {
 		fmt.Println("Votre inventaire est plein !")
@@ -36,8 +37,8 @@ func (u *character) addInventory(item obj) {
 func (u *character) removeInventory(item obj) {
 	for i, invItem := range u.inv {
 		if invItem.id == item.id {
-			if invItem.amout > 1 {
-				u.inv[i].amout -= 1
+			if invItem.amount > 1 {
+				u.inv[i].amount -= 1
 			} else {
 				u.inv = append(u.inv[:i], u.inv[i+1:]...)
 			}
@@ -50,11 +51,10 @@ func (u *character) accessInventory() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	for {
-
 		fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
 		for cpt, v := range u.inv {
 			fmt.Printf(" %s.%d%s - %s ⨯ %d\n",
-				yellow, cpt+1, reset, v.name, v.amout)
+				yellow, cpt+1, reset, v.name, v.amount)
 		}
 		fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
 		fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
@@ -65,42 +65,32 @@ func (u *character) accessInventory() {
 
 		if choix == "exit" {
 			clear()
-			loop() // Retourne au menu principal
+			loop()
 			return
 		} else if choix == "e" {
 			clear()
-			loop() // Retourne au menu principal
+			loop()
 			return
 		}
 
-		// Tenter de convertir l'entrée en un entier
 		var choixInt int
 		_, err := fmt.Sscanf(choix, "%d", &choixInt)
 		if err != nil || choixInt <= 0 || choixInt > len(u.inv) {
 			clear()
 			fmt.Println("Choix invalide, veuillez réessayer.")
-			continue // Rester dans le menu si l'entrée est invalide
+			continue
 		}
 
-		item := u.inv[choixInt-1] // Récupérer l'objet choisi
-		switch item.id {
-		case 4:
+		item := u.inv[choixInt-1]
+		switch item.cath {
+		case "Equipement":
 			clear()
-			u.spellBook("Boule de feu")
+			u.equipItem(item)
 			u.removeInventory(item)
-			fmt.Println("Vous avez appris le sort 'Boule de feu' !")
-		case 1:
-			clear()
-			u.takePot()
-
-		case 2:
-			clear()
-			u.takePoisonPot()
+			fmt.Printf("Vous avez équipé %s.\n", item.name)
 		default:
-			fmt.Println("Cet objet ne peut pas être utilisé.")
+			fmt.Println("Cet objet ne peut pas être équipé.")
 		}
-
-		// Réafficher l'inventaire après chaque action
 	}
 }
 
@@ -163,5 +153,39 @@ func (u *character) takePoisonPot() {
 		u.removeInventory(u.inv[cpt])
 	} else {
 		fmt.Println("Pas de potions de poison dans l'inventaire.")
+	}
+}
+func (u *character) equipItem(item obj) {
+	switch item.cath {
+	case "head":
+		if u.stuff.head.id != 0 { // If there's already an item equipped
+			fmt.Printf("Swapping %s with %s\n", u.stuff.head.name, item.name)
+		} else {
+			fmt.Printf("Equipping %s\n", item.name)
+		}
+		u.maxHp += item.buff - u.stuff.head.buff
+		u.stuff.head = item
+	case "body":
+		if u.stuff.body.id != 0 {
+			fmt.Printf("Swapping %s with %s\n", u.stuff.body.name, item.name)
+		} else {
+			fmt.Printf("Equipping %s\n", item.name)
+		}
+		u.maxHp += item.buff - u.stuff.body.buff
+		u.stuff.body = item
+	case "legs":
+		if u.stuff.legs.id != 0 {
+			fmt.Printf("Swapping %s with %s\n", u.stuff.legs.name, item.name)
+		} else {
+			fmt.Printf("Equipping %s\n", item.name)
+		}
+		u.maxHp += item.buff - u.stuff.legs.buff
+		u.stuff.legs = item
+	default:
+		fmt.Println("Invalid equipment type")
+	}
+	// Adjust HP to ensure it doesn't exceed maxHP
+	if u.hp > u.maxHp {
+		u.hp = u.maxHp
 	}
 }

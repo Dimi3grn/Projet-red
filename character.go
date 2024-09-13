@@ -5,6 +5,12 @@ import (
 	"math/rand"
 )
 
+type equipement struct {
+	head obj
+	body obj
+	legs obj
+}
+
 type character struct {
 	name    string
 	classe  string
@@ -17,9 +23,10 @@ type character struct {
 	alive   bool
 	purse   int
 	skills  []string
+	stuff   equipement
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{}, 0, true, 200, nil}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{}, 0, true, 200, nil, equipement{obj{}, obj{}, obj{}}}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -66,6 +73,11 @@ func (u character) displayinfo() {
 	} else {
 		fmt.Print("Aucun")
 	}
+	fmt.Print("\néquipement :\n    ")
+	fmt.Print("\n    ")
+	fmt.Print(u.stuff.head.name)
+	fmt.Print(u.stuff.body.name)
+	fmt.Print(u.stuff.legs.name)
 	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter l'Inventaire\n", yellow, red, reset)
 	read := readTer()
 	if read == "exit" {

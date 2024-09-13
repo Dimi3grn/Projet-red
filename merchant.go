@@ -9,10 +9,10 @@ var quant_trollSkin int = 5
 var quant_boarLeather int = 5
 var quant_ravenFeather int = 5
 var quant_spellBook int = 1 // Le livre de sort est unique
-var wolfFur obj = obj{5, "Fourrure de Loup", 1, "Matériel"}
-var trollSkin obj = obj{6, "Peau de Troll", 1, "Matériel"}
-var boarLeather obj = obj{7, "Cuir de Sanglier", 1, "Matériel"}
-var ravenFeather obj = obj{8, "Plume de Corbeau", 1, "Matériel"}
+var wolfFur obj = obj{5, "Fourrure de Loup", 1, "Matériel", 0}
+var trollSkin obj = obj{6, "Peau de Troll", 1, "Matériel", 0}
+var boarLeather obj = obj{7, "Cuir de Sanglier", 1, "Matériel", 0}
+var ravenFeather obj = obj{8, "Plume de Corbeau", 1, "Matériel", 0}
 
 // Coûts des articles
 var healthPotPrice int = 0
