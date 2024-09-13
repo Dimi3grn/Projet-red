@@ -47,7 +47,7 @@ func accessMenu() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	var option string
-	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les satistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
+	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
@@ -83,6 +83,14 @@ func accessMenu() {
 		if rep == "hp" || rep == "h" {
 			MyChar.takePot()
 		}
+		loop()
+	case "forge":
+		clear()
+		MyChar.accessBlacksmith() // Nouvelle fonction pour accéder au forgeron
+		loop()
+	case "f":
+		clear()
+		MyChar.accessBlacksmith() // Nouvelle fonction pour accéder au forgeron
 		loop()
 	case "exit":
 		clear()

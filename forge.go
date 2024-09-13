@@ -7,45 +7,17 @@ var adventureHat obj = obj{9, "Chapeau de l'aventurier", 1, "Equipement"}
 var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "Equipement"}
 var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "Equipement"}
 
-// Menu principal avec l'ajout du Forgeron
-func (u *character) mainMenu() {
-	fmt.Println("Bienvenue dans le menu principal")
-	fmt.Println("1. Accéder au marchand")
-	fmt.Println("2. Accéder au forgeron")
-	fmt.Println("3. Quitter")
-
-	var choix string
-	fmt.Scan(&choix)
-
-	switch choix {
-	case "1":
-		clear()
-		u.accessMerchant()
-	case "2":
-		clear()
-		u.accessBlacksmith() // Ajout du forgeron
-	case "3":
-		clear()
-		fmt.Println("Vous quittez le jeu.")
-		return
-	default:
-		clear()
-		fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
-		u.mainMenu()
-	}
-}
-
 // Accès au forgeron
 func (u *character) accessBlacksmith() {
-	//red := "\033[31m"
+	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
 
 	fmt.Printf("╒══════════╡%sForgeron%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
-	fmt.Println("1. Fabriquer un Chapeau de l'aventurier (5 pièces d'or)")
-	fmt.Println("2. Fabriquer une Tunique de l'aventurier (5 pièces d'or)")
-	fmt.Println("3. Fabriquer des Bottes de l'aventurier (5 pièces d'or)")
-	fmt.Println("4. Retour au menu principal")
+	fmt.Printf("%s╭%s1.%s Fabriquer un Chapeau de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
+	fmt.Printf("%s│%s2.%s Fabriquer une Tunique de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
+	fmt.Printf("%s╰%s3.%s Fabriquer des Bottes de l'aventurier (5 pièces d'or)\n", yellow, red, reset)
+	fmt.Printf("%s'menu'%s. Retour au menu principal\n", red, reset)
 
 	var choix string
 	fmt.Scan(&choix)
@@ -57,9 +29,12 @@ func (u *character) accessBlacksmith() {
 		u.craftAdventureTunic()
 	case "3":
 		u.craftAdventureBoots()
-	case "4":
+	case "m":
 		clear()
-		u.mainMenu()
+		loop()
+	case "menu":
+		clear()
+		loop()
 	default:
 		clear()
 		fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
@@ -69,6 +44,7 @@ func (u *character) accessBlacksmith() {
 
 // Fonction pour fabriquer le Chapeau de l'aventurier
 func (u *character) craftAdventureHat() {
+	clear()
 	if u.purse < 5 {
 		fmt.Println("Vous n'avez pas assez de pièces d'or pour fabriquer cet équipement.")
 	} else if u.checkInventory("Plume de Corbeau") < 1 || u.checkInventory("Cuir de Sanglier") < 1 {
@@ -85,6 +61,7 @@ func (u *character) craftAdventureHat() {
 
 // Fonction pour fabriquer la Tunique de l'aventurier
 func (u *character) craftAdventureTunic() {
+	clear()
 	if u.purse < 5 {
 		fmt.Println("Vous n'avez pas assez de pièces d'or pour fabriquer cet équipement.")
 	} else if u.checkInventory("Fourrure de Loup") < 2 || u.checkInventory("Peau de Troll") < 1 {
@@ -101,6 +78,7 @@ func (u *character) craftAdventureTunic() {
 
 // Fonction pour fabriquer les Bottes de l'aventurier
 func (u *character) craftAdventureBoots() {
+	clear()
 	if u.purse < 5 {
 		fmt.Println("Vous n'avez pas assez de pièces d'or pour fabriquer cet équipement.")
 	} else if u.checkInventory("Fourrure de Loup") < 1 || u.checkInventory("Cuir de Sanglier") < 1 {
@@ -112,6 +90,7 @@ func (u *character) craftAdventureBoots() {
 		u.addInventory(adventureBoots)
 		fmt.Println("Vous avez fabriqué des Bottes de l'aventurier !")
 	}
+
 	u.accessBlacksmith()
 }
 
