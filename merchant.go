@@ -2,21 +2,26 @@ package main
 
 import "fmt"
 
-var quant_2 int = 10 // Par exemple, initialisez avec une quantité de 10 potions
-
+var quant_healthPot int = 10
+var quant_poisonPot int = 10
+var quant_wolfFur int = 5
+var quant_trollSkin int = 5
+var quant_boarLeather int = 5
+var quant_ravenFeather int = 5
+var quant_spellBook int = 1 // Le livre de sort est unique
 var wolfFur obj = obj{5, "Fourrure de Loup", 1, "Matériel"}
 var trollSkin obj = obj{6, "Peau de Troll", 1, "Matériel"}
 var boarLeather obj = obj{7, "Cuir de Sanglier", 1, "Matériel"}
 var ravenFeather obj = obj{8, "Plume de Corbeau", 1, "Matériel"}
 
 // Coûts des articles
-var healthPotPrice int = 3
-var poisonPotPrice int = 6
-var fireSpellBookPrice int = 25
-var wolfFurPrice int = 4
-var trollSkinPrice int = 7
-var boarLeatherPrice int = 3
-var ravenFeatherPrice int = 1
+var healthPotPrice int = 0
+var poisonPotPrice int = 20
+var fireSpellBookPrice int = 50
+var wolfFurPrice int = 20
+var trollSkinPrice int = 15
+var boarLeatherPrice int = 7
+var ravenFeatherPrice int = 5
 
 // Disponibilité des articles
 var healthPotAvailable bool = true
@@ -34,39 +39,39 @@ func (u *character) accessMerchant() {
 	if healthPotAvailable || poisonPotAvailable || !fireSpellBookBought || wolfFurAvailable || trollSkinAvailable || boarLeatherAvailable || ravenFeatherAvailable {
 		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 		if healthPotAvailable {
-			fmt.Printf(" %s1.%s - Potion de vie (%d) ⨯ 1\n", yellow, reset, healthPotPrice)
+			fmt.Printf(" %s1.%s - Potion de vie (%d $) ⨯ %d\n", yellow, reset, healthPotPrice, quant_healthPot)
 		} else {
 			fmt.Println(" ̶1̶.̶ ̶-̶ ̶P̶o̶t̶i̶o̶n̶ ̶d̶e̶ ̶v̶i̶e̶ ̶(̶g̶r̶a̶t̶u̶i̶t̶)̶ ̶⨯̶ ̶0̶")
 		}
 		if poisonPotAvailable {
-			fmt.Printf(" %s2.%s - Potion de poison (%d) ⨯ 1\n", yellow, reset, poisonPotPrice)
+			fmt.Printf(" %s2.%s - Potion de poison (%d $) ⨯ %d\n", yellow, reset, poisonPotPrice, quant_poisonPot)
 		} else {
 			fmt.Println(" ̶2̶.̶ ̶-̶ ̶P̶o̶i̶s̶o̶n̶ ̶P̶o̶t̶ ̶(̶0̶)̶ ̶⨯̶ ̶0̶")
 		}
 		if !fireSpellBookBought {
-			fmt.Printf(" %s3.%s - Livre de Sort: Boule de Feu (%d pièces d'or)\n", yellow, reset, fireSpellBookPrice)
+			fmt.Printf(" %s3.%s - Livre de Sort: Boule de Feu (%d $)\n", yellow, reset, fireSpellBookPrice)
 		} else {
-			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶")
+			fmt.Println(" ̶3̶.̶ ̶-̶ ̶L̶i̶v̶r̶e̶ ̶d̶e̶ ̶S̶o̶r̶t̶:̶ ̶B̶o̶u̶l̶e̶ ̶d̶e̶ ̶F̶e̶u̶ ⨯̶ ̶0̶")
 		}
 		if wolfFurAvailable {
-			fmt.Printf(" %s4.%s - Fourrure de Loup (%d pièces d'or)\n", yellow, reset, wolfFurPrice)
+			fmt.Printf(" %s4.%s - Fourrure de Loup (%d $) ⨯ %d\n", yellow, reset, wolfFurPrice, quant_wolfFur)
 		} else {
-			fmt.Println(" ̶4̶.̶ ̶-̶ ̶F̶o̶u̶r̶r̶u̶r̶e̶ ̶d̶e̶ ̶L̶o̶u̶p̶")
+			fmt.Println(" ̶4̶.̶ ̶-̶ ̶F̶o̶u̶r̶r̶u̶r̶e̶ ̶d̶e̶ ̶L̶o̶u̶p̶ ⨯̶ ̶0̶")
 		}
 		if trollSkinAvailable {
-			fmt.Printf(" %s5.%s - Peau de Troll (%d pièces d'or)\n", yellow, reset, trollSkinPrice)
+			fmt.Printf(" %s5.%s - Peau de Troll (%d $) ⨯ %d\n", yellow, reset, trollSkinPrice, quant_trollSkin)
 		} else {
-			fmt.Println(" ̶5̶.̶ ̶-̶ ̶P̶e̶a̶u̶ ̶d̶e̶ ̶T̶r̶o̶l̶l̶")
+			fmt.Println(" ̶5̶.̶ ̶-̶ ̶P̶e̶a̶u̶ ̶d̶e̶ ̶T̶r̶o̶l̶l̶ ⨯̶ ̶0̶")
 		}
 		if boarLeatherAvailable {
-			fmt.Printf(" %s6.%s - Cuir de Sanglier (%d pièces d'or)\n", yellow, reset, boarLeatherPrice)
+			fmt.Printf(" %s6.%s - Cuir de Sanglier (%d $) ⨯ %d\n", yellow, reset, boarLeatherPrice, quant_boarLeather)
 		} else {
-			fmt.Println(" ̶6̶.̶ ̶-̶ ̶C̶u̶i̶r̶ ̶d̶e̶ ̶S̶a̶n̶g̶l̶i̶e̶r̶")
+			fmt.Println(" ̶6̶.̶ ̶-̶ ̶C̶u̶i̶r̶ ̶d̶e̶ ̶S̶a̶n̶g̶l̶i̶e̶r̶ ⨯̶ ̶0̶")
 		}
 		if ravenFeatherAvailable {
-			fmt.Printf(" %s7.%s - Plume de Corbeau (%d pièces d'or)\n", yellow, reset, ravenFeatherPrice)
+			fmt.Printf(" %s7.%s - Plume de Corbeau (%d $) ⨯ %d\n", yellow, reset, ravenFeatherPrice, quant_ravenFeather)
 		} else {
-			fmt.Println(" ̶7̶.̶ ̶-̶ ̶P̶l̶u̶m̶e̶ ̶d̶e̶ ̶C̶o̶r̶b̶e̶a̶u̶")
+			fmt.Println(" ̶7̶.̶ ̶-̶ ̶P̶l̶u̶m̶e̶ ̶d̶e̶ ̶C̶o̶r̶b̶e̶a̶u̶ ⨯̶ ̶0̶")
 		}
 		fmt.Println("╘══════════════════════════════╛")
 		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
@@ -87,7 +92,10 @@ func (u *character) accessMerchant() {
 			u.purse -= healthPotPrice // Déduit le coût de la potion de vie
 			clear()
 			fmt.Println("Vous avez acheté une Potion de vie !")
-			healthPotAvailable = false // Potion n'est plus disponible après l'achat
+			quant_healthPot-- // Réduit la quantité disponible chez le marchand
+			if quant_healthPot == 0 {
+				healthPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
+			}
 		} else if u.purse < healthPotPrice {
 			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
@@ -102,8 +110,8 @@ func (u *character) accessMerchant() {
 			u.addInventory(obj2)      // Ajoute une potion de poison
 			u.purse -= poisonPotPrice // Déduit le coût de la potion de poison
 			fmt.Printf("Vous avez acheté une Potion de poison pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", poisonPotPrice, u.purse)
-			quant_2-- // Réduit la quantité disponible chez le marchand
-			if quant_2 == 0 {
+			quant_poisonPot-- // Réduit la quantité disponible chez le marchand
+			if quant_poisonPot == 0 {
 				poisonPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
 			}
 		} else if u.purse < poisonPotPrice {
@@ -136,7 +144,10 @@ func (u *character) accessMerchant() {
 			u.purse -= wolfFurPrice // Déduit le coût de la fourrure
 			clear()
 			fmt.Printf("Vous avez acheté une Fourrure de Loup pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", wolfFurPrice, u.purse)
-			wolfFurAvailable = false // Fourrure n'est plus disponible après l'achat
+			quant_wolfFur-- // Réduit la quantité disponible chez le marchand
+			if quant_wolfFur == 0 {
+				wolfFurAvailable = false // Potion n'est plus disponible après avoir été épuisée
+			}
 		} else if u.purse < wolfFurPrice {
 			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette fourrure.")
@@ -152,7 +163,10 @@ func (u *character) accessMerchant() {
 			u.purse -= trollSkinPrice // Déduit le coût de la peau de troll
 			clear()
 			fmt.Printf("Vous avez acheté une Peau de Troll pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", trollSkinPrice, u.purse)
-			trollSkinAvailable = false // Peau n'est plus disponible après l'achat
+			quant_trollSkin-- // Réduit la quantité disponible chez le marchand
+			if quant_trollSkin == 0 {
+				trollSkinAvailable = false // Potion n'est plus disponible après avoir été épuisée
+			}
 		} else if u.purse < trollSkinPrice {
 			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette peau.")
@@ -168,7 +182,10 @@ func (u *character) accessMerchant() {
 			u.purse -= boarLeatherPrice // Déduit le coût du cuir
 			clear()
 			fmt.Printf("Vous avez acheté un Cuir de Sanglier pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", boarLeatherPrice, u.purse)
-			boarLeatherAvailable = false // Cuir n'est plus disponible après l'achat
+			quant_boarLeather-- // Réduit la quantité disponible chez le marchand
+			if quant_boarLeather == 0 {
+				boarLeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+			}
 		} else if u.purse < boarLeatherPrice {
 			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter ce cuir.")
@@ -184,7 +201,10 @@ func (u *character) accessMerchant() {
 			u.purse -= ravenFeatherPrice // Déduit le coût de la plume
 			clear()
 			fmt.Printf("Vous avez acheté une Plume de Corbeau pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", ravenFeatherPrice, u.purse)
-			ravenFeatherAvailable = false // Plume n'est plus disponible après l'achat
+			quant_ravenFeather-- // Réduit la quantité disponible chez le marchand
+			if quant_ravenFeather == 0 {
+				ravenFeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+			}
 		} else if u.purse < ravenFeatherPrice {
 			clear()
 			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette plume.")
