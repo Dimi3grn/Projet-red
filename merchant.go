@@ -13,6 +13,7 @@ var wolfFur obj = obj{5, "Fourrure de Loup", 1, "Matériel", 0}
 var trollSkin obj = obj{6, "Peau de Troll", 1, "Matériel", 0}
 var boarLeather obj = obj{7, "Cuir de Sanglier", 1, "Matériel", 0}
 var ravenFeather obj = obj{8, "Plume de Corbeau", 1, "Matériel", 0}
+var quant_InvSpace int = 3
 
 // Coûts des articles
 var healthPotPrice int = 0
@@ -22,6 +23,7 @@ var wolfFurPrice int = 20
 var trollSkinPrice int = 15
 var boarLeatherPrice int = 7
 var ravenFeatherPrice int = 5
+var inventorySpacePrice int = 30
 
 // Disponibilité des articles
 var healthPotAvailable bool = true
@@ -31,6 +33,7 @@ var wolfFurAvailable bool = true
 var trollSkinAvailable bool = true
 var boarLeatherAvailable bool = true
 var ravenFeatherAvailable bool = true
+var inventorySpaceAvaible bool = true
 
 func (u *character) accessMerchant() {
 	red := "\033[31m"
@@ -81,6 +84,11 @@ func (u *character) accessMerchant() {
 		} else {
 			fmt.Println(" ̶7̶.̶ ̶-̶ ̶P̶l̶u̶m̶e̶ ̶d̶e̶ ̶C̶o̶r̶b̶e̶a̶u̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
+		if inventorySpaceAvaible {
+			fmt.Printf("\n %s0.%s - 5 espaces d'inventaire (%s%d $%s) ⨯ %d\n", yellow, reset, green, inventorySpacePrice, reset, quant_InvSpace)
+		} else {
+			fmt.Printf("\nCapacité d'inventaire maximale atteinte\n")
+		}
 		fmt.Println("╘══════════════════════════════╛")
 		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	} else {
@@ -94,6 +102,24 @@ func (u *character) accessMerchant() {
 	fmt.Scan(&choix)
 
 	switch choix {
+	case "0":
+		if inventorySpaceAvaible && u.purse > inventorySpacePrice {
+			u.invSize += 5
+			u.purse -= inventorySpacePrice
+			clear()
+			fmt.Printf("vous avez maintenant %d espace d'inventaire\n", u.invSize)
+			quant_InvSpace -= 1
+			if quant_InvSpace == 0 {
+				inventorySpaceAvaible = false
+			}
+		} else if u.purse < inventorySpacePrice {
+			clear()
+			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette option.")
+		} else {
+			clear()
+			fmt.Println("Le marchand n'a plus d'espace d'inventaire")
+		}
+		u.accessMerchant()
 	case "1":
 		if healthPotAvailable && u.purse >= healthPotPrice {
 			u.addInventory(obj1)      // Ajoute la potion de vie

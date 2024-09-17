@@ -86,6 +86,8 @@ func (u *character) accessInventory() {
 		case "Consumable":
 			clear()
 			u.useConsumable(item)
+		case "Book":
+			u.spellBook(item.name)
 		default:
 			fmt.Println("Cet objet ne peut pas être utilisé ou équipé.")
 		}
