@@ -5,6 +5,24 @@ import (
 	"time"
 )
 
+// Définition de la structure Boss
+type Boss struct {
+	name       string
+	maxHP      int
+	hp         int
+	attack     int
+	initiative int
+}
+
+// Initialisation des différents boss
+func InitBosses() []Boss {
+	return []Boss{
+		{name: "Sword Warrior", maxHP: 50, hp: 50, attack: 7, initiative: 4},
+		{name: "Orc", maxHP: 80, hp: 80, attack: 10, initiative: 5},
+		{name: "Dragon", maxHP: 120, hp: 120, attack: 15, initiative: 6},
+	}
+}
+
 // Définition de la structure Monstre
 type Monstre struct {
 	name       string
@@ -25,51 +43,138 @@ func InitGoblin() Monstre {
 	}
 }
 
+// Fonction pour gérer le pattern de combat du gobelin
 func (g *Monstre) goblinPattern(turn int, u *character) {
 	red := "\033[31m"
 	reset := "\033[0m"
 	var damage int
+
 	if turn%3 == 0 {
-		// On every 3rd turn, goblin deals 200% damage
 		damage = g.attack * 2
 	} else {
-		// Regular attack: 100% damage
 		damage = g.attack
 	}
 
 	u.hp -= damage
 	if u.hp < 0 {
-		u.hp = 0 // Prevent negative HP
+		u.hp = 0 // Empêcher les HP négatifs
 	}
 
-	// Display attack details
-	fmt.Printf("%s vous inflige à %s%d%s points de dégâts\n", g.name, red, damage, reset)
+	// Détails de l'attaque
+	fmt.Printf("%s vous inflige %s%d%s points de dégâts\n", g.name, red, damage, reset)
 	time.Sleep(1 * time.Second)
-
 }
 
-// StartCombat updated to use the goblinPattern
-func (u *character) StartCombat() {
-	yellow := "\033[33m"
+func (b *Boss) bossPattern(turn int, u *character) {
+	red := "\033[31m"
 	reset := "\033[0m"
-	green := "\033[32m"
-	goblin := InitGoblin()
-	turn := 1 // Track combat turns
+	var damage int
 
-	// Determine who starts based on initiative
+	if turn%3 == 0 {
+		damage = b.attack * 2
+	} else {
+		damage = b.attack
+	}
+
+	u.hp -= damage
+	if u.hp < 0 {
+		u.hp = 0 // Empêcher les HP négatifs
+	}
+
+	// Détails de l'attaque
+	fmt.Printf("%s inflige %s%d%s points de dégâts à %s\n", b.name, red, damage, reset, u.name)
+	time.Sleep(1 * time.Second)
+}
+
+// Fonction pour démarrer le combat contre une série de boss
+func (u *character) StartBossSequence() {
+	bosses := InitBosses() // Charger la liste des boss
+	turn := 1              // Suivi des tours de combat
+
+	// Boucle de progression à travers les boss
+	for _, boss := range bosses {
+		fmt.Printf("Un %s apparaît avec %d points de vie et attaque à %d !\n", boss.name, boss.hp, boss.attack)
+		time.Sleep(1 * time.Second)
+
+		// Détermine qui commence en fonction de l'initiative
+		playerTurn := u.initiative >= boss.initiative
+
+		// Boucle de combat
+		for u.hp > 0 && boss.hp > 0 {
+			fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, boss.name, boss.hp)
+			time.Sleep(1 * time.Second)
+
+			if playerTurn {
+				// Tour du joueur
+				fmt.Println("Que voulez-vous faire ?")
+				fmt.Println("1. Attaquer")
+				fmt.Println("2. Accéder à l'inventaire")
+				var choice string
+				fmt.Scan(&choice)
+				clear()
+
+				switch choice {
+				case "1":
+					// Attaquer le boss
+					damage := 5 // Supposons des dégâts fixes
+					boss.hp -= damage
+					fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", boss.name, damage)
+					time.Sleep(1 * time.Second)
+					if boss.hp <= 0 {
+						fmt.Printf("Vous avez vaincu le %s !\n", boss.name)
+						break
+					}
+				case "2":
+					// Accéder à l'inventaire
+					u.accessFightInventory()
+					// Continue le combat après la gestion de l'inventaire
+					continue
+				default:
+					fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
+					continue
+				}
+			} else {
+				// Tour du boss avec son pattern
+				boss.bossPattern(turn, u)
+				if u.hp <= 0 {
+					fmt.Println("Vous avez été vaincu par le boss...")
+					return
+				}
+			}
+
+			// Changement de tour pour le prochain round
+			playerTurn = !playerTurn
+			turn++
+		}
+
+		// Vérification si le joueur est toujours en vie pour combattre le boss suivant
+		if u.hp <= 0 {
+			fmt.Println("Vous avez perdu. Recommencez depuis le début.")
+			return
+		}
+	}
+
+	fmt.Println("Félicitations ! Vous avez vaincu tous les boss !")
+}
+
+// Fonction pour démarrer le combat contre un gobelin d'entraînement
+func (u *character) StartCombat() {
+	goblin := InitGoblin()
+	turn := 1 // Suivi des tours de combat
+
+	// Détermine qui commence en fonction de l'initiative
 	playerTurn := u.initiative >= goblin.initiative
 
 	// Combat loop
 	for u.hp > 0 && goblin.hp > 0 {
-		// Display the current status
-		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, goblin.name, green, goblin.hp, reset)
+		fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, goblin.name, goblin.hp)
 		time.Sleep(1 * time.Second)
 
 		if playerTurn {
 			// Player's turn
 			fmt.Println("Que voulez-vous faire ?")
-			fmt.Printf("%s1.%s Attaquer\n", yellow, reset)
-			fmt.Printf("%s2.%s Accéder à l'inventaire\n", yellow, reset)
+			fmt.Println("1. Attaquer")
+			fmt.Println("2. Accéder à l'inventaire")
 			var choice string
 			fmt.Scan(&choice)
 			clear()
@@ -77,7 +182,7 @@ func (u *character) StartCombat() {
 			switch choice {
 			case "1":
 				// Attack the goblin
-				damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+				damage := 5 // Assuming fixed attack damage
 				goblin.hp -= damage
 				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
 				time.Sleep(1 * time.Second)
@@ -88,7 +193,9 @@ func (u *character) StartCombat() {
 
 			case "2":
 				// Access inventory
-				u.accessFightInventory() // Assume this handles healing, then continue combat
+				u.accessFightInventory()
+				// Continue combat after handling inventory
+				continue
 
 			default:
 				fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
@@ -109,6 +216,7 @@ func (u *character) StartCombat() {
 	}
 }
 
+// Fonction pour accéder à l'inventaire pendant le combat
 func (u *character) accessFightInventory() {
 	red := "\033[31m"
 	yellow := "\033[33m"

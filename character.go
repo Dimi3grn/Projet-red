@@ -28,7 +28,7 @@ type character struct {
 	initiative int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5, 1}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat, obj1, obj1, obj1, obj1, obj1, obj1, obj1}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5, 1}
 
 func setclasse() {
 	rng := rand.Intn(3)
