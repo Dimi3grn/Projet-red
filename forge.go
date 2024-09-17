@@ -3,9 +3,11 @@ package main
 import "fmt"
 
 // Ajout des nouveaux objets à fabriquer
-var adventureHat obj = obj{9, "Chapeau de l'aventurier", 1, "Equipement", 0}
-var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "Equipement", 0}
-var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "Equipement", 0}
+var adventureHat obj = obj{9, "Chapeau de l'aventurier", 1, "EquipHead", 10}
+var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "EquipChest", 0}
+var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "EquipBoots", 0}
+
+var defaultHat obj = obj{12, "chapeau par defaut", 1, "EquipHead", 0}
 
 // Accès au forgeron
 func (u *character) accessBlacksmith() {

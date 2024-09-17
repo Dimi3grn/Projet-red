@@ -26,7 +26,7 @@ type character struct {
 	stuff   equipement
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{}, 0, true, 200, nil, equipement{obj{}, obj{}, obj{}}}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -74,9 +74,10 @@ func (u character) displayinfo() {
 		fmt.Print("Aucun")
 	}
 	fmt.Print("\néquipement :\n    ")
-	fmt.Print("\n    ")
 	fmt.Print(u.stuff.head.name)
+	fmt.Print("\n    ")
 	fmt.Print(u.stuff.body.name)
+	fmt.Print("\n    ")
 	fmt.Print(u.stuff.legs.name)
 	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter l'Inventaire\n", yellow, red, reset)
 	read := readTer()

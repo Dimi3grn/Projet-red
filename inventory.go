@@ -53,23 +53,18 @@ func (u *character) accessInventory() {
 	for {
 		fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
 		for cpt, v := range u.inv {
-			fmt.Printf(" %s.%d%s - %s ⨯ %d\n",
-				yellow, cpt+1, reset, v.name, v.amount)
+			fmt.Printf(" %s.%d%s - %s ⨯ %d\n", yellow, cpt+1, reset, v.name, v.amount)
 		}
 		fmt.Printf("\n vous avez %s%d/%d%s objets dans votre inventaire\n╘══════════════════════════════════════╛\n", yellow, len(u.inv), u.invSize, reset)
 		fmt.Printf("Tapez le numéro de l'objet à utiliser.\n")
-		fmt.Printf("%s╭%s'[slot number]'%s pour utiliser l'objet\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
+		fmt.Printf("%s╭%s'[slot number]'%s pour utiliser/equipper l'objet\n%s╰%s'exit'%s pour quitter l'Inventaire\n", yellow, red, reset, yellow, red, reset)
 
 		var choix string
 		fmt.Scan(&choix)
 
 		if choix == "exit" {
 			clear()
-			loop()
-			return
-		} else if choix == "e" {
-			clear()
-			loop()
+			loop() // Retourne au menu principal
 			return
 		}
 
@@ -82,14 +77,17 @@ func (u *character) accessInventory() {
 		}
 
 		item := u.inv[choixInt-1]
+
+		// Check if item is equipable or usable
 		switch item.cath {
-		case "Equipement":
+		case "EquipHead", "EquipChest", "EquipBoots":
 			clear()
 			u.equipItem(item)
-			u.removeInventory(item)
-			fmt.Printf("Vous avez équipé %s.\n", item.name)
+		case "Consumable":
+			clear()
+			u.useConsumable(item)
 		default:
-			fmt.Println("Cet objet ne peut pas être équipé.")
+			fmt.Println("Cet objet ne peut pas être utilisé ou équipé.")
 		}
 	}
 }
@@ -156,36 +154,63 @@ func (u *character) takePoisonPot() {
 	}
 }
 func (u *character) equipItem(item obj) {
+
+	// Check which body part the item belongs to
 	switch item.cath {
-	case "head":
-		if u.stuff.head.id != 0 { // If there's already an item equipped
-			fmt.Printf("Swapping %s with %s\n", u.stuff.head.name, item.name)
-		} else {
-			fmt.Printf("Equipping %s\n", item.name)
-		}
-		u.maxHp += item.buff - u.stuff.head.buff
-		u.stuff.head = item
-	case "body":
-		if u.stuff.body.id != 0 {
-			fmt.Printf("Swapping %s with %s\n", u.stuff.body.name, item.name)
-		} else {
-			fmt.Printf("Equipping %s\n", item.name)
-		}
-		u.maxHp += item.buff - u.stuff.body.buff
-		u.stuff.body = item
-	case "legs":
-		if u.stuff.legs.id != 0 {
-			fmt.Printf("Swapping %s with %s\n", u.stuff.legs.name, item.name)
-		} else {
-			fmt.Printf("Equipping %s\n", item.name)
-		}
-		u.maxHp += item.buff - u.stuff.legs.buff
-		u.stuff.legs = item
+	case "EquipHead":
+		u.equipHead(item)
+	case "EquipChest":
+		u.equipBody(item)
+	case "EquipBoots":
+		u.equipLegs(item)
 	default:
-		fmt.Println("Invalid equipment type")
+		fmt.Println("Cet objet ne peut pas être équipé.")
 	}
-	// Adjust HP to ensure it doesn't exceed maxHP
-	if u.hp > u.maxHp {
-		u.hp = u.maxHp
+}
+
+func (u *character) equipHead(item obj) {
+	if u.stuff.head.name != "" {
+		u.maxHp -= u.stuff.head.buff
+		u.maxHp += item.buff
+		u.addInventory(u.stuff.head)
+		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.head.name, item.name)
+		u.removeInventory(item)
+	} else {
+		u.maxHp += item.buff
+		fmt.Printf("Vous avez équipé %s.\n", item.name)
+		u.removeInventory(item)
+	}
+	u.stuff.head = item
+
+}
+
+func (u *character) equipBody(item obj) {
+	if u.stuff.body.name != "" {
+		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.body.name, item.name)
+	} else {
+		fmt.Printf("Vous avez équipé %s.\n", item.name)
+	}
+	u.stuff.body = item
+	u.maxHp += 25
+}
+
+func (u *character) equipLegs(item obj) {
+	if u.stuff.legs.name != "" {
+		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.legs.name, item.name)
+	} else {
+		fmt.Printf("Vous avez équipé %s.\n", item.name)
+	}
+	u.stuff.legs = item
+	u.maxHp += 20
+}
+
+func (u *character) useConsumable(item obj) {
+	switch item.name {
+	case "Health Pot":
+		u.takePot()
+	case "Poison Pot":
+		u.takePoisonPot()
+	default:
+		fmt.Println("Cet objet ne peut pas être utilisé.")
 	}
 }
