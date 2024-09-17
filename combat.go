@@ -121,7 +121,7 @@ func (u *character) accessFightInventory(goblin *Monstre) {
 		var choix string
 		fmt.Scan(&choix)
 
-		if choix == "exit" {
+		if choix == "exit" || choix == "e" {
 			clear()
 			return // Return to combat without resetting goblin
 		}
