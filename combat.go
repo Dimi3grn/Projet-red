@@ -23,7 +23,6 @@ func InitGoblin() Monstre {
 func (u *character) StartCombat() {
 	goblin := InitGoblin()
 
-	// Combat loop
 	for u.hp > 0 && goblin.hp > 0 {
 		// Display the current status
 		fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, goblin.name, goblin.hp)
@@ -34,21 +33,19 @@ func (u *character) StartCombat() {
 		fmt.Println("2. Accéder à l'inventaire")
 		var choice string
 		fmt.Scan(&choice)
+		clear()
 
 		switch choice {
 		case "1":
-			// Attack the goblin
-			damage := 5 // Assuming fixed attack damage, you can adjust this if needed
-			goblin.hp -= damage
-			fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
+			// Player attacks the goblin
+			u.Attack(&goblin)
 			if goblin.hp <= 0 {
 				fmt.Println("Vous avez vaincu le gobelin !")
 				return
 			}
 
 			// Goblin's turn
-			u.hp -= goblin.attack
-			fmt.Printf("Le %s vous attaque pour %d points de dégâts !\n", goblin.name, goblin.attack)
+			goblin.MonstreAttack(u)
 			if u.hp <= 0 {
 				fmt.Println("Vous avez été vaincu par le gobelin...")
 				return
@@ -56,8 +53,8 @@ func (u *character) StartCombat() {
 
 		case "2":
 			// Access inventory
-			u.accessFightInventory() // Assuming this function handles inventory and healing
-			// After using the inventory, continue the loop to let the player act again
+			u.accessFightInventory(&goblin)
+			// After accessing inventory, continue to the player's turn
 
 		default:
 			fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
@@ -107,11 +104,11 @@ func (u *character) CombatLoop() {
 		}
 	}
 }
-
-func (u *character) accessFightInventory() {
+func (u *character) accessFightInventory(goblin *Monstre) {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
+
 	for {
 		fmt.Printf("╒══════════╡%sVotre inventaire%s╞══════════╕\n", yellow, reset)
 		for cpt, v := range u.inv {
@@ -126,8 +123,7 @@ func (u *character) accessFightInventory() {
 
 		if choix == "exit" {
 			clear()
-			u.StartCombat() // Retourne au menu principal
-			return
+			return // Return to combat without resetting goblin
 		}
 
 		var choixInt int
