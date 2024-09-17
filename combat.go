@@ -26,6 +26,8 @@ func InitGoblin() Monstre {
 }
 
 func (g *Monstre) goblinPattern(turn int, u *character) {
+	red := "\033[31m"
+	reset := "\033[0m"
 	var damage int
 	if turn%3 == 0 {
 		// On every 3rd turn, goblin deals 200% damage
@@ -41,13 +43,16 @@ func (g *Monstre) goblinPattern(turn int, u *character) {
 	}
 
 	// Display attack details
-	fmt.Printf("%s inflige à %s %d de dégâts\n", g.name, u.name, damage)
+	fmt.Printf("%s vous inflige à %s%d%s points de dégâts\n", g.name, red, damage, reset)
 	time.Sleep(1 * time.Second)
 
 }
 
 // StartCombat updated to use the goblinPattern
 func (u *character) StartCombat() {
+	yellow := "\033[33m"
+	reset := "\033[0m"
+	green := "\033[32m"
 	goblin := InitGoblin()
 	turn := 1 // Track combat turns
 
@@ -57,14 +62,14 @@ func (u *character) StartCombat() {
 	// Combat loop
 	for u.hp > 0 && goblin.hp > 0 {
 		// Display the current status
-		fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, goblin.name, goblin.hp)
+		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, goblin.name, green, goblin.hp, reset)
 		time.Sleep(1 * time.Second)
 
 		if playerTurn {
 			// Player's turn
 			fmt.Println("Que voulez-vous faire ?")
-			fmt.Println("1. Attaquer")
-			fmt.Println("2. Accéder à l'inventaire")
+			fmt.Printf("%s1.%s Attaquer\n", yellow, reset)
+			fmt.Printf("%s2.%s Accéder à l'inventaire\n", yellow, reset)
 			var choice string
 			fmt.Scan(&choice)
 			clear()
