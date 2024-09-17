@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // Définition de la structure Monstre
 type Monstre struct {
@@ -16,17 +19,41 @@ func InitGoblin() Monstre {
 		name:   "Gobelin d'entraînement",
 		maxHP:  40,
 		hp:     40,
-		attack: 5,
+		attack: 3,
 	}
 }
 
+func (g *Monstre) goblinPattern(turn int, u *character) {
+	var damage int
+	if turn%3 == 0 {
+		// On every 3rd turn, goblin deals 200% damage
+		damage = g.attack * 2
+	} else {
+		// Regular attack: 100% damage
+		damage = g.attack
+	}
+
+	u.hp -= damage
+	if u.hp < 0 {
+		u.hp = 0 // Prevent negative HP
+	}
+
+	// Display attack details
+	fmt.Printf("%s inflige à %s %d de dégâts\n", g.name, u.name, damage)
+	time.Sleep(1 * time.Second)
+
+}
+
+// StartCombat updated to use the goblinPattern
 func (u *character) StartCombat() {
 	goblin := InitGoblin()
+	turn := 1 // Track combat turns
 
+	// Combat loop
 	for u.hp > 0 && goblin.hp > 0 {
 		// Display the current status
 		fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, goblin.name, goblin.hp)
-
+		time.Sleep(1 * time.Second)
 		// Player's turn
 		fmt.Println("Que voulez-vous faire ?")
 		fmt.Println("1. Attaquer")
@@ -37,74 +64,37 @@ func (u *character) StartCombat() {
 
 		switch choice {
 		case "1":
-			// Player attacks the goblin
-			u.Attack(&goblin)
+			// Attack the goblin
+			damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+			goblin.hp -= damage
+			fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
+			time.Sleep(1 * time.Second)
 			if goblin.hp <= 0 {
 				fmt.Println("Vous avez vaincu le gobelin !")
 				return
 			}
 
-			// Goblin's turn
-			goblin.MonstreAttack(u)
-			if u.hp <= 0 {
-				fmt.Println("Vous avez été vaincu par le gobelin...")
-				return
-			}
-
 		case "2":
 			// Access inventory
-			u.accessFightInventory(&goblin)
-			// After accessing inventory, continue to the player's turn
+			u.accessFightInventory() // Assume this handles healing, then continue combat
 
 		default:
 			fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
-		}
-	}
-}
-
-// Fonction pour attaquer le monstre
-func (u *character) Attack(monstre *Monstre) {
-	damage := u.attack // Suppose que `attack` est un attribut de `character`
-	monstre.hp -= damage
-	if monstre.hp < 0 {
-		monstre.hp = 0
-	}
-	fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", monstre.name, damage)
-}
-
-// Fonction pour que le monstre attaque le joueur
-func (m *Monstre) MonstreAttack(joueur *character) {
-	damage := m.attack
-	joueur.hp -= damage // Suppose que `hp` est un attribut de `character`
-	if joueur.hp < 0 {
-		joueur.hp = 0
-	}
-	fmt.Printf("Le %s vous attaque pour %d points de dégâts !\n", m.name, damage)
-}
-
-// Fonction de boucle de combat
-func (u *character) CombatLoop() {
-	goblin := InitGoblin()
-	for u.hp > 0 && goblin.hp > 0 {
-		// Affichage des statistiques
-		fmt.Printf("Vos points de vie : %d | Points de vie du gobelin : %d\n", u.hp, goblin.hp)
-
-		// Le joueur attaque
-		u.Attack(&goblin)
-		if goblin.hp <= 0 {
-			fmt.Println("Vous avez vaincu le gobelin !")
-			return
+			continue
 		}
 
-		// Le gobelin attaque
-		goblin.MonstreAttack(u)
+		// Goblin's turn with attack pattern
+		goblin.goblinPattern(turn, u)
 		if u.hp <= 0 {
 			fmt.Println("Vous avez été vaincu par le gobelin...")
 			return
 		}
+
+		turn++ // Increment turn count
 	}
 }
-func (u *character) accessFightInventory(goblin *Monstre) {
+
+func (u *character) accessFightInventory() {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
@@ -141,14 +131,18 @@ func (u *character) accessFightInventory(goblin *Monstre) {
 		case "EquipHead", "EquipChest", "EquipBoots":
 			clear()
 			u.equipItem(item)
+			return
 		case "Consumable":
 			clear()
 			u.useConsumable(item)
+			return
 		case "Book":
 			clear()
 			u.spellBook(item.name)
+			return
 		default:
 			fmt.Println("Cet objet ne peut pas être utilisé ou équipé.")
+			return
 		}
 	}
 }
