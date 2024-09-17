@@ -47,28 +47,20 @@ func accessMenu() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	var option string
-	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
+	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s│%s'combat'%s pour accédé au combats%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
 	case "dmg":
 		MyChar.takeDamage(1)
-	case "mark":
+	case "mark", "m":
 		clear()
 		MyChar.accessMerchant()
 		loop()
-	case "m":
-		clear()
-		MyChar.accessMerchant()
-		loop()
-	case "stats":
+	case "stats", "s":
 		clear()
 		MyChar.displayinfo()
 		loop()
-	case "s":
-		clear()
-		MyChar.displayinfo()
-		loop()
-	case "inv":
+	case "inv", "i":
 		clear()
 		MyChar.accessInventory()
 		rep := readTer()
@@ -76,26 +68,11 @@ func accessMenu() {
 			MyChar.takePot()
 		}
 		loop()
-	case "i":
-		clear()
-		MyChar.accessInventory()
-		rep := readTer()
-		if rep == "hp" || rep == "h" {
-			MyChar.takePot()
-		}
-		loop()
-	case "forge":
+	case "forge", "f":
 		clear()
 		MyChar.accessBlacksmith() // Nouvelle fonction pour accéder au forgeron
 		loop()
-	case "f":
-		clear()
-		MyChar.accessBlacksmith() // Nouvelle fonction pour accéder au forgeron
-		loop()
-	case "exit":
-		clear()
-		loop()
-	case "e":
+	case "exit", "e":
 		clear()
 		loop()
 	default:
