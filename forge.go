@@ -67,7 +67,7 @@ func (u *character) accessBlacksmith() {
 		u.craftAdventureTunic()
 	case "3":
 		u.craftAdventureBoots()
-	case "e", "exit":
+	case "exit", "e":
 		clear()
 		loop()
 	default:
