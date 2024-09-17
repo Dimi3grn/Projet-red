@@ -82,9 +82,7 @@ func (u character) displayinfo() {
 	fmt.Print(u.stuff.legs.name)
 	fmt.Printf("\n╘═══════════════════╛\n%s⎸%s'exit'%s\tpour quitter l'Inventaire\n", yellow, red, reset)
 	read := readTer()
-	if read == "exit" {
-		clear()
-	} else if read == "e" {
+	if read == "exit" || read == "e" {
 		clear()
 	} else {
 		clear()

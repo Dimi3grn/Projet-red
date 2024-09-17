@@ -62,7 +62,7 @@ func (u *character) accessInventory() {
 		var choix string
 		fmt.Scan(&choix)
 
-		if choix == "exit" {
+		if choix == "exit" || choix == "e" {
 			clear()
 			loop() // Retourne au menu principal
 			return

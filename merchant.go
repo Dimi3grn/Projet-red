@@ -248,11 +248,7 @@ func (u *character) accessMerchant() {
 		}
 		u.accessMerchant()
 
-	case "exit":
-		clear()
-		fmt.Println("Vous quittez le marchand.")
-		return
-	case "e":
+	case "exit", "e":
 		clear()
 		fmt.Println("Vous quittez le marchand.")
 		return
