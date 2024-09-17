@@ -74,7 +74,7 @@ func accessMenu() {
 		loop()
 	case "combat", "c":
 		clear()
-		MyChar.combatSelection() // Nouvelle fonction pour accéder au combat
+		MyChar.StartCombat() // Nouvelle fonction pour accéder au combat
 		loop()
 	case "exit", "e":
 		clear()

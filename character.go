@@ -24,9 +24,10 @@ type character struct {
 	purse   int
 	skills  []string
 	stuff   equipement
+	attack  int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 15, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -119,5 +120,6 @@ func (u *character) spellBook(spell string) {
 	}
 	// Si le sort n'est pas déjà appris, on l'ajoute
 	u.skills = append(u.skills, spell)
+	u.removeInventory(fireSpellBook)
 	fmt.Printf("Vous avez appris le sort: %s\n", spell)
 }
