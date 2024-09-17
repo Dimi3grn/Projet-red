@@ -27,7 +27,7 @@ type character struct {
 	attack  int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 15, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -52,7 +52,7 @@ func setclasse() {
 		MyChar.invSize = 5
 	}
 	MyChar.hp = MyChar.maxHp
-	MyChar.hp = 1
+	MyChar.hp = 15
 	MyChar.skills = append(MyChar.skills, "Coup de poing")
 }
 

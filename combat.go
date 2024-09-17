@@ -126,7 +126,7 @@ func (u *character) accessFightInventory() {
 
 		if choix == "exit" {
 			clear()
-			loop() // Retourne au menu principal
+			u.StartCombat() // Retourne au menu principal
 			return
 		}
 
