@@ -12,22 +12,23 @@ type equipement struct {
 }
 
 type character struct {
-	name    string
-	classe  string
-	lvl     int
-	exp     int
-	maxHp   int
-	hp      int
-	inv     []obj
-	invSize int
-	alive   bool
-	purse   int
-	skills  []string
-	stuff   equipement
-	attack  int
+	name       string
+	classe     string
+	lvl        int
+	exp        int
+	maxHp      int
+	hp         int
+	inv        []obj
+	invSize    int
+	alive      bool
+	purse      int
+	skills     []string
+	stuff      equipement
+	attack     int
+	initiative int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5, 1}
 
 func setclasse() {
 	rng := rand.Intn(3)

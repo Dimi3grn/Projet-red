@@ -7,19 +7,21 @@ import (
 
 // Définition de la structure Monstre
 type Monstre struct {
-	name   string
-	maxHP  int
-	hp     int
-	attack int
+	name       string
+	maxHP      int
+	hp         int
+	attack     int
+	initiative int
 }
 
 // Initialisation d'un gobelin d'entraînement
 func InitGoblin() Monstre {
 	return Monstre{
-		name:   "Gobelin d'entraînement",
-		maxHP:  40,
-		hp:     40,
-		attack: 3,
+		name:       "Gobelin d'entraînement",
+		maxHP:      40,
+		hp:         40,
+		attack:     3,
+		initiative: 3,
 	}
 }
 
@@ -49,47 +51,55 @@ func (u *character) StartCombat() {
 	goblin := InitGoblin()
 	turn := 1 // Track combat turns
 
+	// Determine who starts based on initiative
+	playerTurn := u.initiative >= goblin.initiative
+
 	// Combat loop
 	for u.hp > 0 && goblin.hp > 0 {
 		// Display the current status
 		fmt.Printf("Vos points de vie : %d | Points de vie du %s : %d\n", u.hp, goblin.name, goblin.hp)
 		time.Sleep(1 * time.Second)
-		// Player's turn
-		fmt.Println("Que voulez-vous faire ?")
-		fmt.Println("1. Attaquer")
-		fmt.Println("2. Accéder à l'inventaire")
-		var choice string
-		fmt.Scan(&choice)
-		clear()
 
-		switch choice {
-		case "1":
-			// Attack the goblin
-			damage := 5 // Assuming fixed attack damage, you can adjust this if needed
-			goblin.hp -= damage
-			fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
-			time.Sleep(1 * time.Second)
-			if goblin.hp <= 0 {
-				fmt.Println("Vous avez vaincu le gobelin !")
+		if playerTurn {
+			// Player's turn
+			fmt.Println("Que voulez-vous faire ?")
+			fmt.Println("1. Attaquer")
+			fmt.Println("2. Accéder à l'inventaire")
+			var choice string
+			fmt.Scan(&choice)
+			clear()
+
+			switch choice {
+			case "1":
+				// Attack the goblin
+				damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+				goblin.hp -= damage
+				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
+				time.Sleep(1 * time.Second)
+				if goblin.hp <= 0 {
+					fmt.Println("Vous avez vaincu le gobelin !")
+					return
+				}
+
+			case "2":
+				// Access inventory
+				u.accessFightInventory() // Assume this handles healing, then continue combat
+
+			default:
+				fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
+				continue
+			}
+		} else {
+			// Goblin's turn with attack pattern
+			goblin.goblinPattern(turn, u)
+			if u.hp <= 0 {
+				fmt.Println("Vous avez été vaincu par le gobelin...")
 				return
 			}
-
-		case "2":
-			// Access inventory
-			u.accessFightInventory() // Assume this handles healing, then continue combat
-
-		default:
-			fmt.Println("Choix non valide. Veuillez essayer de nouveau.")
-			continue
 		}
 
-		// Goblin's turn with attack pattern
-		goblin.goblinPattern(turn, u)
-		if u.hp <= 0 {
-			fmt.Println("Vous avez été vaincu par le gobelin...")
-			return
-		}
-
+		// Switch turn for the next round
+		playerTurn = !playerTurn
 		turn++ // Increment turn count
 	}
 }
