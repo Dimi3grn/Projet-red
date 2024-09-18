@@ -105,16 +105,20 @@ func (g *Monstre) ancientDemonPattern(u *character) {
 }
 
 func (g *Monstre) dragonPattern(u *character) { //fonction basic, pas d'attaque spéciale, a compléter
+	var hasprinted bool = false
 	rand.Seed(time.Now().UnixNano())
 	red := "\033[31m"
 	reset := "\033[0m"
 	var damage int
-	if rand.Intn(5) == 0 {
-		damage = g.attack * 2
-		fmt.Println("The dragon hit a critical hit")
-	} else {
-		// Regular attack: 100% damage
-		damage = g.attack
+	damage = g.attack
+
+	if g.hp < 40 {
+
+		if hasprinted == false {
+			fmt.Println("Le dragon rentre dans une nouvelle phase, ses dégats sont augmentés")
+
+		}
+		damage += 2
 	}
 
 	u.hp -= damage
@@ -209,7 +213,7 @@ func (u *character) StartFight1() {
 
 func (u *character) StartFight2() {
 	//ascii art pour le chevalier et le joueur
-	fmt.Printf("Vous vous retrouvez maintenant face à un Démon ancient%s\n", u.classe)
+	fmt.Printf("Vous vous retrouvez maintenant face à un Démon ancient\n")
 	time.Sleep(300 * time.Millisecond)
 	fmt.Println("vous sentez une présence obscure vous envahir")
 	time.Sleep(300 * time.Millisecond)
