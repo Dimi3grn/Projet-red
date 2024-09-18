@@ -122,3 +122,13 @@ func (u *character) spellBook(spell string) {
 	u.removeInventory(fireSpellBook)
 	fmt.Printf("Vous avez appris le sort: %s\n", spell)
 }
+
+func (u *character) HpActualise() {
+	if u.classe == "humain" {
+		u.maxHp = (u.lvl * 20) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+	} else if u.classe == "elfe" {
+		u.maxHp = (u.lvl * 15) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+	} else if u.classe == "nain" {
+		u.maxHp = (u.lvl * 30) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+	}
+}
