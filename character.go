@@ -125,10 +125,10 @@ func (u *character) spellBook(spell string) {
 
 func (u *character) HpActualise() {
 	if u.classe == "humain" {
-		u.maxHp = (u.lvl * 20) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+		u.maxHp = (u.lvl * 20) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs.buff
 	} else if u.classe == "elfe" {
-		u.maxHp = (u.lvl * 15) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+		u.maxHp = (u.lvl * 15) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs.buff
 	} else if u.classe == "nain" {
-		u.maxHp = (u.lvl * 30) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs
+		u.maxHp = (u.lvl * 30) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs.buff
 	}
 }
