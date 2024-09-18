@@ -50,12 +50,12 @@ func (u *character) accessBlacksmith() {
 		fmt.Printf("%s│%s  - 1 Fourrure de Loup (%s%d%s)\n", yellow, reset, red, u.checkInventory("Fourrure de Loup"), reset)
 	}
 	if u.checkInventory("Cuir de Sanglier") >= 1 {
-		fmt.Printf("%s╰%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, green, u.checkInventory("Cuir de Sanglier"), reset)
+		fmt.Printf("%s│%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, green, u.checkInventory("Cuir de Sanglier"), reset)
 	} else {
-		fmt.Printf("%s╰%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, red, u.checkInventory("Cuir de Sanglier"), reset)
+		fmt.Printf("%s│%s  - 1 Cuir de Sanglier (%s%d%s)\n", yellow, reset, red, u.checkInventory("Cuir de Sanglier"), reset)
 	}
 
-	fmt.Printf("%s'exit'%s. Retour au menu principal\n", red, reset)
+	fmt.Printf("%s╰%s'exit'%s. Retour au menu principal\n", yellow, red, reset)
 
 	var choix string
 	fmt.Scan(&choix)
