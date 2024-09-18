@@ -28,7 +28,7 @@ type character struct {
 	initiative int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, adventureTunic, adventureBoots}, 5, 1}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, defaultBody, defaultLegs}, 5, 1}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -97,7 +97,7 @@ func (u *character) takeDamage(dmg int) {
 	u.dead()
 }
 
-func (u *character) dead() {
+func (u *character) dead() bool {
 	if u.hp <= 0 {
 		fmt.Println("Vous êtes mort... WASTED!")
 		u.alive = false
@@ -105,8 +105,9 @@ func (u *character) dead() {
 		u.alive = true
 		fmt.Printf("Vous avez été ressuscité avec %d HP.\nVous avez perdu la moitié de votre argent\n", u.hp)
 		u.purse /= 2
-		loop()
+		return true
 	}
+	return false
 }
 
 func (u *character) spellBook(spell string) {

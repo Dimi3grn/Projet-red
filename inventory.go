@@ -173,17 +173,15 @@ func (u *character) equipItem(item obj) {
 
 func (u *character) equipHead(item obj) {
 	if u.stuff.head.name != "" {
-		u.maxHp -= u.stuff.head.buff
-		u.maxHp += item.buff
 		u.addInventory(u.stuff.head)
 		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.head.name, item.name)
 		u.removeInventory(item)
 	} else {
-		u.maxHp += item.buff
 		fmt.Printf("Vous avez équipé %s.\n", item.name)
 		u.removeInventory(item)
 	}
 	u.stuff.head = item
+	u.HpActualise()
 
 }
 
