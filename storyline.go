@@ -199,8 +199,13 @@ func (u *character) StartFight1() {
 		} else {
 			// Goblin's turn with attack pattern
 			Knight.knightPattern(u)
-			if u.hp <= 0 {
+			var toreturn = false
+			if u.dead() {
 				fmt.Println("Vous avez été vaincu par le chevalier...")
+				toreturn = true
+			}
+			if toreturn {
+				u.dead()
 				return
 			}
 		}
@@ -276,8 +281,13 @@ func (u *character) StartFight2() {
 		} else {
 			// Goblin's turn with attack pattern
 			demon.ancientDemonPattern(u)
-			if u.hp <= 0 {
-				fmt.Println("Vous avez été vaincu par le Démon ancient...")
+			var toreturn = false
+			if u.dead() {
+				fmt.Println("Vous avez été vaincu par le chevalier...")
+				toreturn = true
+			}
+			if toreturn {
+				u.dead()
 				return
 			}
 		}
@@ -363,8 +373,13 @@ func (u *character) StartFight3() {
 		} else {
 			// Goblin's turn with attack pattern
 			dragon.dragonPattern(u)
-			if u.hp <= 0 {
+			var toreturn = false
+			if u.dead() {
 				fmt.Println("Vous avez été vaincu par le chevalier...")
+				toreturn = true
+			}
+			if toreturn {
+				u.dead()
 				return
 			}
 		}

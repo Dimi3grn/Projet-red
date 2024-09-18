@@ -8,6 +8,8 @@ var adventureTunic obj = obj{10, "Tunique de l'aventurier", 1, "EquipChest", 15}
 var adventureBoots obj = obj{11, "Bottes de l'aventurier", 1, "EquipBoots", 5}
 
 var defaultHat obj = obj{12, "chapeau par defaut", 1, "EquipHead", 0}
+var defaultBody obj = obj{13, "tunique par defaut", 1, "EquipHead", 0}
+var defaultLegs obj = obj{14, "pantalon par defaut", 1, "EquipHead", 0}
 
 // Accès au forgeron
 func (u *character) accessBlacksmith() {
