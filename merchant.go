@@ -90,12 +90,12 @@ func (u *character) accessMerchant() {
 			fmt.Printf("\nCapacité d'inventaire maximale atteinte\n")
 		}
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
+		fmt.Printf("%s(%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	} else {
 		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 		fmt.Println("Le marchand n'a plus rien à proposer.")
 		fmt.Println("╘══════════════════════════════╛")
-		fmt.Printf("%s⎸%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
+		fmt.Printf("%s(%s'exit'%s\tpour quitter le marchand\n", yellow, red, reset)
 	}
 
 	var choix string
