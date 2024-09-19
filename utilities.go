@@ -86,3 +86,23 @@ func accessMenu() {
 		accessMenu()
 	}
 }
+
+func health_bar(hb_pv, hb_maxhp int) {
+
+	yellow := "\033[33m"
+	red := "\033[31m"
+	cyan := "\033[36m"
+	reset := "\033[0m"
+
+	pixel := float64(hb_pv) / float64(hb_maxhp) * 10
+
+	fmt.Printf("%s[%s", yellow, reset)
+	for i := 0; i < 10; i++ {
+		if float64(i) < pixel {
+			fmt.Printf("%s▆", red)
+		} else {
+			fmt.Printf("%s▆", cyan)
+		}
+	}
+	fmt.Printf("%s]%s - %s%d%s/%s%d%s hp\n", yellow, reset, red, hb_pv, reset, red, hb_maxhp, reset)
+}
