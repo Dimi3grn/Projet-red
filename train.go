@@ -23,7 +23,7 @@ func InitGoblin() Monstre {
 		hp:         40,
 		attack:     3,
 		initiative: 3,
-		exp:        100,
+		exp:        300,
 	}
 }
 
@@ -88,7 +88,10 @@ func (u *character) StartCombat() {
 				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
 				time.Sleep(1 * time.Second)
 				if goblin.hp <= 0 {
-					fmt.Println("Vous avez vaincu le gobelin !")
+					fmt.Println("Vous avez vaincu le Gobelin !")
+					u.exp += goblin.exp
+					u.updateXp()
+					u.initiative += 1
 					return
 				}
 

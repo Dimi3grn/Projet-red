@@ -129,6 +129,8 @@ func (u *character) HpActualise() {
 }
 
 func (u *character) updateXp() {
+	yellow := "\033[33m"
+	reset := "\033[0m"
 	for u.exp >= u.maxExp {
 
 		if u.exp >= u.maxExp {
@@ -137,7 +139,7 @@ func (u *character) updateXp() {
 			u.maxExp = 100 * u.lvl
 		}
 		u.HpActualise()
-		fmt.Printf("Félicitation, vous avez monté de niveau, vous êtes actuellement au niveau %d!\n", u.lvl)
+		fmt.Printf("%sFélicitation, vous avez monté de niveau, vous êtes actuellement au niveau %d!%s\n", yellow, u.lvl, reset)
 	}
 	u.hp = u.maxHp
 }
