@@ -143,11 +143,10 @@ func (u *character) StartFight1() {
 	time.Sleep(300 * time.Millisecond)
 	fmt.Println("Dès la sortie du chateau, vous croisez un chevalier corrompu vous demandant ...")
 	time.Sleep(300 * time.Millisecond)
-	fmt.Println("Abbatez le pour mettre fin a cette injustice")
+	fmt.Println("Abattez le pour mettre fin a cette injustice")
 	time.Sleep(3 * time.Second)
 	yellow := "\033[33m"
 	reset := "\033[0m"
-	green := "\033[32m"
 	Knight := initKnight()
 	turn := 1 // Track combat turns
 
@@ -164,10 +163,14 @@ func (u *character) StartFight1() {
 	for u.hp > 0 && Knight.hp > 0 {
 		if playerTurn {
 			mainchar()
+			fmt.Print("\t")
+			health_bar(u.hp, u.maxHp)
+			fmt.Print("\t\t\t\t\t\t")
+			health_bar(Knight.hp, Knight.maxHP)
+			fmt.Print("\n")
 		}
 
 		// Display the current status
-		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, Knight.name, green, Knight.hp, reset)
 		time.Sleep(1 * time.Second)
 
 		if playerTurn {
@@ -296,6 +299,11 @@ func (u *character) StartFight2() {
 	for u.hp > 0 && demon.hp > 0 {
 		if playerTurn {
 			printdem()
+			fmt.Print("\t")
+			health_bar(u.hp, u.maxHp)
+			fmt.Print("\t\t\t\t\t\t\t\t")
+			health_bar(demon.hp, demon.maxHP)
+			fmt.Print("\n")
 		}
 		// Display the current status
 		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, demon.name, green, demon.hp, reset)
@@ -391,6 +399,15 @@ func (u *character) StartFight3() {
 	}
 	// Combat loop
 	for u.hp > 0 && dragon.hp > 0 {
+		if playerTurn {
+			printdrag()
+			fmt.Print("\t")
+			health_bar(u.hp, u.maxHp)
+			fmt.Print("\t\t\t\t\t\t\t\t")
+			health_bar(dragon.hp, dragon.maxHP)
+			fmt.Print("\n")
+		}
+
 		// Display the current status
 		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, dragon.name, green, dragon.hp, reset)
 		time.Sleep(1 * time.Second)

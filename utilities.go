@@ -104,5 +104,5 @@ func health_bar(hb_pv, hb_maxhp int) {
 			fmt.Printf("%s▆", cyan)
 		}
 	}
-	fmt.Printf("%s]%s - %s%d%s/%s%d%s hp\n", yellow, reset, red, hb_pv, reset, red, hb_maxhp, reset)
+	fmt.Printf("%s]%s - %s%d%s/%s%d%s hp", yellow, reset, red, hb_pv, reset, red, hb_maxhp, reset)
 }

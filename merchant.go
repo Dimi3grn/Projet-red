@@ -26,6 +26,7 @@ var ravenFeatherPrice int = 5
 var inventorySpacePrice int = 30
 
 // Disponibilité des articles
+var healthPotDiscount bool = true
 var healthPotAvailable bool = true
 var poisonPotAvailable bool = true
 var fireSpellBookBought bool = false
@@ -44,7 +45,14 @@ func (u *character) accessMerchant() {
 		fmt.Printf("╒══════════╡%sMarchand%s╞══════════╕\n \tPurse : %d\n", yellow, reset, u.purse)
 
 		if healthPotAvailable {
-			fmt.Printf(" %s1.%s - Potion de vie (%s%d $%s) ⨯ %d\n", yellow, reset, green, healthPotPrice, reset, quant_healthPot)
+			if healthPotDiscount {
+				fmt.Printf(" %s1.%s - Potion de vie (%s%d $%s) ⨯ %d\n", yellow, reset, green, healthPotPrice, reset, quant_healthPot)
+				healthPotDiscount = false
+			} else {
+				healthPotPrice = 10
+				fmt.Printf(" %s1.%s - Potion de vie (%s%d $%s) ⨯ %d\n", yellow, reset, green, healthPotPrice, reset, quant_healthPot)
+			}
+
 		} else {
 			fmt.Println(" ̶1̶.̶ ̶-̶ ̶P̶o̶t̶i̶o̶n̶ ̶d̶e̶ ̶v̶i̶e̶ ̶(̶0̶ ̶$̶) ̶⨯̶ ̶0̶")
 		}
