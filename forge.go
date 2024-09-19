@@ -88,8 +88,8 @@ func (u *character) craftAdventureHat() {
 		fmt.Println("Vous n'avez pas assez de matériaux pour fabriquer le Chapeau de l'aventurier.")
 	} else {
 		u.purse -= 5
-		u.removeItem("Plume de Corbeau", 1)
-		u.removeItem("Cuir de Sanglier", 1)
+		u.removeInventory(ravenFeather)
+		u.removeInventory(boarLeather)
 		u.addInventory(adventureHat)
 		fmt.Println("Vous avez fabriqué un Chapeau de l'aventurier !")
 	}
@@ -144,9 +144,12 @@ func (u *character) checkInventory(itemName string) int {
 
 // Fonction pour retirer un certain nombre d'items de l'inventaire
 func (u *character) removeItem(itemName string, qty int) {
+	fmt.Println(itemName)
+	fmt.Println(qty)
 	newInventory := []obj{}
 	for _, item := range u.inv {
 		if item.name == itemName && qty > 0 {
+			fmt.Println("entered")
 			qty--
 			continue
 		}

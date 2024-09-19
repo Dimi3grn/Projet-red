@@ -54,7 +54,6 @@ func setclasse() {
 		MyChar.invSize = 5
 	}
 	MyChar.hp = MyChar.maxHp
-	MyChar.hp = 15
 	MyChar.skills = append(MyChar.skills, "Coup de poing")
 }
 
