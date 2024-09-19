@@ -14,6 +14,7 @@ func initKnight() Monstre {
 		hp:         25,
 		attack:     2,
 		initiative: 1,
+		exp:        300,
 	}
 }
 
@@ -24,6 +25,7 @@ func initAncientDemon() Monstre {
 		hp:         40,
 		attack:     3,
 		initiative: 3,
+		exp:        800,
 	}
 }
 func initDragon() Monstre {
@@ -33,12 +35,13 @@ func initDragon() Monstre {
 		hp:         100,
 		attack:     5,
 		initiative: 5,
+		exp:        2000,
 	}
 }
 
 // variables servant a memoriser si le boss est mort
-var KnightDefeated bool = true
-var AncientDemonDefeated bool = true
+var KnightDefeated bool = false
+var AncientDemonDefeated bool = false
 var DragonDeafeated bool = false
 
 // fonctions des patterns d'attaque des monstres
@@ -168,7 +171,8 @@ func (u *character) StartFight1() {
 			fmt.Println("Que voulez-vous faire ?")
 			fmt.Printf("%s1.%s Attaquer\n", yellow, reset)
 			fmt.Printf("%s2.%s Accéder à l'inventaire\n", yellow, reset)
-			fmt.Printf("%s3.%s Se replier\n", yellow, reset)
+			fmt.Printf("%s3.%s jeter un sort\n", yellow, reset)
+			fmt.Printf("%s4.%s Se replier\n", yellow, reset)
 			var choice string
 			fmt.Scan(&choice)
 			clear()
@@ -176,20 +180,65 @@ func (u *character) StartFight1() {
 			switch choice {
 			case "1":
 				// Attack the goblin
-				damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+				damage := u.attack // Assuming fixed attack damage, you can adjust this if needed
 				Knight.hp -= damage
 				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", Knight.name, damage)
 				time.Sleep(1 * time.Second)
 				if Knight.hp <= 0 {
 					fmt.Println("Vous avez vaincu le chevalier !")
+					u.exp += Knight.exp
+					u.updateXp()
 					KnightDefeated = true
 					return
 				}
 
 			case "2":
 				// Access inventory
-				u.accessFightInventory() // Assume this handles healing, then continue combat
+				u.accessFightInventory(&Knight) // Assume this handles healing, then continue combat
 			case "3":
+				clear()
+				for cpt, v := range u.skills {
+					fmt.Printf(" %s.%d%s - %s\n", yellow, cpt+1, reset, v)
+				}
+
+				var choix string
+				fmt.Scan(&choix)
+				var choixInt int
+				_, err := fmt.Sscanf(choix, "%d", &choixInt)
+				if err != nil || choixInt <= 0 || choixInt > len(u.skills) {
+					clear()
+					fmt.Println("Choix invalide, veuillez réessayer.")
+					continue
+				}
+				item := u.skills[choixInt-1]
+				switch item {
+				case "Coup de poing":
+					damage := 8 // Assuming fixed attack damage, you can adjust this if needed
+					Knight.hp -= damage
+					fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", Knight.name, damage)
+					time.Sleep(1 * time.Second)
+					if Knight.hp <= 0 {
+						fmt.Println("Vous avez vaincu le chevalier !")
+						u.exp += Knight.exp
+						u.updateXp()
+						KnightDefeated = true
+						return
+					}
+				case "Livre de Sort: Boule de Feu":
+					damage := 18 // Assuming fixed attack damage, you can adjust this if needed
+					Knight.hp -= damage
+					fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", Knight.name, damage)
+					time.Sleep(1 * time.Second)
+					if Knight.hp <= 0 {
+						fmt.Println("Vous avez vaincu le chevalier !")
+						u.exp += Knight.exp
+						u.updateXp()
+						KnightDefeated = true
+						return
+					}
+				}
+
+			case "4":
 				clear()
 				loop()
 			default:
@@ -270,7 +319,7 @@ func (u *character) StartFight2() {
 
 			case "2":
 				// Access inventory
-				u.accessFightInventory() // Assume this handles healing, then continue combat
+				u.accessFightInventory(&demon) // Assume this handles healing, then continue combat
 			case "3":
 				clear()
 				loop()
@@ -362,7 +411,7 @@ func (u *character) StartFight3() {
 
 			case "2":
 				// Access inventory
-				u.accessFightInventory() // Assume this handles healing, then continue combat
+				u.accessFightInventory(&dragon) // Assume this handles healing, then continue combat
 			case "3":
 				clear()
 				loop()

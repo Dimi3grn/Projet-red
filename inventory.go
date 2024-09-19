@@ -14,7 +14,7 @@ type obj struct {
 }
 
 var obj1 obj = obj{1, "Health Pot", 1, "Consumable", 0}
-var obj2 obj = obj{2, "Poison Pot", 1, "Consumable", 0}
+var obj2 obj = obj{2, "Poison Pot", 1, "Poison", 0}
 
 // var obj3 obj = obj{3, "Sword", 1, "Equipement"}
 var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book", 0}
@@ -120,38 +120,38 @@ func (u *character) takePot() {
 	}
 }
 
-func (u *character) takePoisonPot() {
+func (ennemy *Monstre) takePoisonPot() {
 	isInside := false
 	cpt := 0
-	for j, k := range u.inv {
+	for j, k := range MyChar.inv {
 		if k.id == 2 { // ID pour Poison Pot
 			isInside = true
 			cpt = j
 		}
 	}
 	if isInside {
-		fmt.Println("Vous avez bu une potion de poison !")
+		fmt.Printf("Vous avez empoisoné %s!\n", ennemy.name)
 
 		// Inflige 3 dégâts par seconde pendant 3 secondes (pour un total de 9 dégâts)
 		for i := 0; i < 3; i++ {
 			time.Sleep(1 * time.Second) // Délai de 1 seconde entre chaque tick
-			u.hp -= 3                   // Inflige 3 points de dégâts
+			ennemy.hp = ennemy.hp - 3   // Inflige 3 points de dégâts
 
 			// Vérifier si le joueur est mort
-			if u.hp <= 0 {
-				u.hp = 0
-				fmt.Println("Vous êtes mort suite aux effets du poison.")
-				u.dead() // Appelle la fonction "dead" si le joueur est mort
+			if ennemy.hp <= 0 {
+				ennemy.hp = 0
+				fmt.Println("L'ennemi a succombé")
+				MyChar.dead() // Appelle la fonction "dead" si le joueur est mort
 				return
 			}
 
-			fmt.Printf("Vous avez %d points de vie après %d secondes de poison.\n", u.hp, i+1)
+			fmt.Printf("Le monstre a  %d points de vie après %d secondes de poison.\n", ennemy.hp, i+1)
 		}
 
-		fmt.Printf("Le poison s'est dissipé. Vous avez %d points de vie.\n", u.hp)
+		fmt.Printf("Le poison s'est dissipé. Le monstre a avez %d points de vie.\n", ennemy.hp)
 
 		// Retirer la potion de poison de l'inventaire après utilisation
-		u.removeInventory(u.inv[cpt])
+		MyChar.removeInventory(MyChar.inv[cpt])
 	} else {
 		fmt.Println("Pas de potions de poison dans l'inventaire.")
 	}
@@ -209,8 +209,6 @@ func (u *character) useConsumable(item obj) {
 	switch item.name {
 	case "Health Pot":
 		u.takePot()
-	case "Poison Pot":
-		u.takePoisonPot()
 	default:
 		fmt.Println("Cet objet ne peut pas être utilisé.")
 	}

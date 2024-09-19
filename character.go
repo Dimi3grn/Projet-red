@@ -26,9 +26,10 @@ type character struct {
 	stuff      equipement
 	attack     int
 	initiative int
+	maxExp     int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat}, 0, true, 200, nil, equipement{defaultHat, defaultBody, defaultLegs}, 5, 1}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat, obj2}, 0, true, 200, nil, equipement{defaultHat, defaultBody, defaultLegs}, 5, 1, 100}
 
 func setclasse() {
 	rng := rand.Intn(3)
@@ -63,7 +64,7 @@ func (u character) displayinfo() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	fmt.Printf("╒════╡%sVos stats%s╞════╕\n name : %s\n classe : %s\n level : %d\n experience : %d/%d\n hp : %d/%d\n Purse : %d\n",
-		yellow, reset, u.name, u.classe, u.lvl, u.exp, 100*u.lvl, u.hp, u.maxHp, u.purse)
+		yellow, reset, u.name, u.classe, u.lvl, u.exp, u.maxExp, u.hp, u.maxHp, u.purse)
 	fmt.Print(" Skills :\n    ")
 	if len(u.skills) > 0 {
 		for i, skill := range u.skills {
@@ -89,12 +90,6 @@ func (u character) displayinfo() {
 		clear()
 		u.displayinfo()
 	}
-}
-
-func (u *character) takeDamage(dmg int) {
-	u.hp -= dmg
-	fmt.Printf("Vous avez pris %d points de dégâts. HP restants : %d/%d\n", dmg, u.hp, u.maxHp)
-	u.dead()
 }
 
 func (u *character) dead() bool {
@@ -132,4 +127,18 @@ func (u *character) HpActualise() {
 	} else if u.classe == "nain" {
 		u.maxHp = (u.lvl * 30) + u.stuff.head.buff + u.stuff.body.buff + u.stuff.legs.buff
 	}
+}
+
+func (u *character) updateXp() {
+	for u.exp >= u.maxExp {
+
+		if u.exp >= u.maxExp {
+			u.lvl += 1
+			u.exp -= u.maxExp
+			u.maxExp = 100 * u.lvl
+		}
+		u.HpActualise()
+		fmt.Printf("Félicitation, vous avez monté de niveau, vous êtes actuellement au niveau %d!\n", u.lvl)
+	}
+	u.hp = u.maxHp
 }

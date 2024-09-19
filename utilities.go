@@ -50,8 +50,6 @@ func accessMenu() {
 	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s│%s'train'%s pour accédé à l'entraînement\n%s│%s'combat'%s pour acceder à l'histoire principale\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
-	case "dmg":
-		MyChar.takeDamage(1)
 	case "mark", "m":
 		clear()
 		MyChar.accessMerchant()

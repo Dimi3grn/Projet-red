@@ -12,6 +12,7 @@ type Monstre struct {
 	hp         int
 	attack     int
 	initiative int
+	exp        int
 }
 
 // Initialisation d'un gobelin d'entraînement
@@ -22,6 +23,7 @@ func InitGoblin() Monstre {
 		hp:         40,
 		attack:     3,
 		initiative: 3,
+		exp:        100,
 	}
 }
 
@@ -92,7 +94,7 @@ func (u *character) StartCombat() {
 
 			case "2":
 				// Access inventory
-				u.accessFightInventory() // Assume this handles healing, then continue combat
+				u.accessFightInventory(&goblin) // Assume this handles healing, then continue combat
 			case "3":
 				clear()
 				loop()
@@ -115,7 +117,7 @@ func (u *character) StartCombat() {
 	}
 }
 
-func (u *character) accessFightInventory() {
+func (u *character) accessFightInventory(target *Monstre) {
 	red := "\033[31m"
 	yellow := "\033[33m"
 	reset := "\033[0m"
@@ -156,6 +158,10 @@ func (u *character) accessFightInventory() {
 		case "Consumable":
 			clear()
 			u.useConsumable(item)
+			return
+		case "Poison":
+			clear()
+			target.takePoisonPot()
 			return
 		case "Book":
 			clear()
