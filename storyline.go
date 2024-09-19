@@ -162,6 +162,10 @@ func (u *character) StartFight1() {
 	}
 	// Combat loop
 	for u.hp > 0 && Knight.hp > 0 {
+		if playerTurn {
+			mainchar()
+		}
+
 		// Display the current status
 		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, Knight.name, green, Knight.hp, reset)
 		time.Sleep(1 * time.Second)
@@ -290,6 +294,9 @@ func (u *character) StartFight2() {
 	}
 	// Combat loop
 	for u.hp > 0 && demon.hp > 0 {
+		if playerTurn {
+			printdem()
+		}
 		// Display the current status
 		fmt.Printf("Vos points de vie : %s%d%s |%s Points de vie du %s : %s%d\n%s", green, u.hp, yellow, reset, demon.name, green, demon.hp, reset)
 		time.Sleep(1 * time.Second)
@@ -307,12 +314,14 @@ func (u *character) StartFight2() {
 			switch choice {
 			case "1":
 				// Attack the goblin
-				damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+				damage := u.attack // Assuming fixed attack damage, you can adjust this if needed
 				demon.hp -= damage
 				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", demon.name, damage)
 				time.Sleep(1 * time.Second)
 				if demon.hp <= 0 {
 					fmt.Println("Vous avez vaincu le chevalier !")
+					u.exp += demon.exp
+					u.updateXp()
 					AncientDemonDefeated = true
 					return
 				}

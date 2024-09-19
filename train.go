@@ -83,7 +83,7 @@ func (u *character) StartCombat() {
 			switch choice {
 			case "1":
 				// Attack the goblin
-				damage := 5 // Assuming fixed attack damage, you can adjust this if needed
+				damage := u.attack // Assuming fixed attack damage, you can adjust this if needed
 				goblin.hp -= damage
 				fmt.Printf("Vous attaquez le %s pour %d points de dégâts !\n", goblin.name, damage)
 				time.Sleep(1 * time.Second)
@@ -105,8 +105,13 @@ func (u *character) StartCombat() {
 		} else {
 			// Goblin's turn with attack pattern
 			goblin.goblinPattern(turn, u)
-			if u.hp <= 0 {
-				fmt.Println("Vous avez été vaincu par le gobelin...")
+			var toreturn = false
+			if u.dead() {
+				fmt.Println("Vous avez été vaincu par le chevalier...")
+				toreturn = true
+			}
+			if toreturn {
+				u.dead()
 				return
 			}
 		}

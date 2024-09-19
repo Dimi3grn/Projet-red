@@ -29,7 +29,7 @@ type character struct {
 	maxExp     int
 }
 
-var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat, obj2}, 0, true, 200, nil, equipement{defaultHat, defaultBody, defaultLegs}, 5, 1, 100}
+var MyChar character = character{"jack", "humain", 1, 0, 0, 0, []obj{adventureHat, obj2}, 0, true, 200, nil, equipement{defaultHat, defaultBody, defaultLegs}, 20, 1, 100}
 
 func setclasse() {
 	rng := rand.Intn(3)
