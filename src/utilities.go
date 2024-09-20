@@ -47,7 +47,7 @@ func accessMenu() {
 	yellow := "\033[33m"
 	reset := "\033[0m"
 	var option string
-	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s│%s'train'%s pour accédé à l'entraînement\n%s│%s'combat'%s pour acceder à l'histoire principale\n%s│%s'?'%s Qui sont-ils\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
+	fmt.Printf("\t║%sVous êtes dans le Menu%s║\n%s╭%s'stats'%s pour afficher les statistiques\n%s│%s'mark'%s pour afficher le marchand\n%s│%s'inv'%s pour afficher l'inventaire\n%s│%s'forge'%s pour accéder au forgeron\n%s│%s'train'%s pour accédé à l'entraînement\n%s│%s'combat'%s pour acceder à l'histoire principale\n%s│%s'?'%s Qui sont-ils?\n%s╰%s'exit'%s pour quitter\n", yellow, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset, yellow, red, reset)
 	fmt.Scan(&option)
 	switch option {
 	case "mark", "m":
