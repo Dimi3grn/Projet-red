@@ -40,7 +40,7 @@ func initDragon() Monstre {
 }
 
 // variables servant a memoriser si le boss est mort
-var KnightDefeated bool = false
+var KnightDefeated bool = true
 var AncientDemonDefeated bool = false
 var DragonDeafeated bool = false
 
@@ -83,7 +83,6 @@ func (g *Monstre) ancientDemonPattern(u *character) {
 		// Regular attack: 100% damage
 		damage = g.attack
 	}
-
 	u.hp -= damage
 	if u.hp < 0 {
 		u.hp = 0 // Prevent negative HP
@@ -94,7 +93,7 @@ func (g *Monstre) ancientDemonPattern(u *character) {
 		for cpt := 0; cpt < 3; cpt++ {
 			u.hp -= 1
 			time.Sleep(500 * time.Millisecond)
-			fmt.Printf("Le goblin vous a enflamé, vous avez désormais %d points de vie\n", u.hp)
+			fmt.Printf("Le goblin vous a enflamé, vous avez désormais %s%d%s points de vie\n", red, u.hp, reset)
 			if u.hp < 0 {
 				u.hp = 0 // Prevent negative HP
 			}
@@ -102,9 +101,7 @@ func (g *Monstre) ancientDemonPattern(u *character) {
 	}
 	isonfire = false
 	// Display attack details
-
 	time.Sleep(1 * time.Second)
-
 }
 
 func (g *Monstre) dragonPattern(u *character) { //fonction basic, pas d'attaque spéciale, a compléter
@@ -141,7 +138,7 @@ func (u *character) StartFight1() {
 	//ascii art pour le chevalier et le joueur
 	fmt.Printf("Vous commencez votre histoire en tant que %s\n", u.classe)
 	time.Sleep(300 * time.Millisecond)
-	fmt.Println("Dès la sortie du chateau, vous croisez un chevalier corrompu vous demandant ...")
+	fmt.Println("Dès la sortie du chateau, vous croisez un chevalier corrompu vous demandant de l'argent")
 	time.Sleep(300 * time.Millisecond)
 	fmt.Println("Abattez le pour mettre fin a cette injustice")
 	time.Sleep(3 * time.Second)
@@ -238,6 +235,7 @@ func (u *character) StartFight1() {
 					time.Sleep(1 * time.Second)
 					if Knight.hp <= 0 {
 						fmt.Println("Vous avez vaincu le chevalier !")
+						fmt.Println("Vous pouvez relancer un Combat pour continuer l'histoire")
 						u.exp += Knight.exp
 						u.updateXp()
 						KnightDefeated = true

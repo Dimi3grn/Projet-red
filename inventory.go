@@ -20,7 +20,7 @@ var obj2 obj = obj{2, "Poison Pot", 1, "Poison", 0}
 var fireSpellBook obj = obj{4, "Livre de Sort: Boule de Feu", 1, "Book", 0}
 
 func (u *character) addInventory(item obj) {
-	if len(u.inv) < u.invSize {
+	if (len(u.inv) < u.invSize) || (u.checkInventory(item.name) > 0) {
 		for i, invItem := range u.inv {
 			if invItem.id == item.id {
 				u.inv[i].amount += item.amount
@@ -121,6 +121,8 @@ func (u *character) takePot() {
 }
 
 func (ennemy *Monstre) takePoisonPot() {
+	red := "\033[31m"
+	reset := "\033[0m"
 	isInside := false
 	cpt := 0
 	for j, k := range MyChar.inv {
@@ -145,10 +147,10 @@ func (ennemy *Monstre) takePoisonPot() {
 				return
 			}
 
-			fmt.Printf("Le monstre a  %d points de vie après %d secondes de poison.\n", ennemy.hp, i+1)
+			fmt.Printf("Le monstre a  %s%d%s points de vie après %d secondes de poison.\n", red, ennemy.hp, reset, i+1)
 		}
 
-		fmt.Printf("Le poison s'est dissipé. Le monstre a avez %d points de vie.\n", ennemy.hp)
+		fmt.Printf("Le poison s'est dissipé. Le monstre a avez %s%d%s points de vie.\n", red, ennemy.hp, reset)
 
 		// Retirer la potion de poison de l'inventaire après utilisation
 		MyChar.removeInventory(MyChar.inv[cpt])
@@ -187,22 +189,28 @@ func (u *character) equipHead(item obj) {
 
 func (u *character) equipBody(item obj) {
 	if u.stuff.body.name != "" {
+		u.addInventory(u.stuff.head)
 		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.body.name, item.name)
+		u.removeInventory(item)
 	} else {
 		fmt.Printf("Vous avez équipé %s.\n", item.name)
+		u.removeInventory(item)
 	}
 	u.stuff.body = item
-	u.maxHp += 25
+	u.HpActualise()
 }
 
 func (u *character) equipLegs(item obj) {
 	if u.stuff.legs.name != "" {
+		u.addInventory(u.stuff.legs)
 		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.legs.name, item.name)
+		u.removeInventory(item)
 	} else {
 		fmt.Printf("Vous avez équipé %s.\n", item.name)
+		u.removeInventory(item)
 	}
 	u.stuff.legs = item
-	u.maxHp += 20
+	u.HpActualise()
 }
 
 func (u *character) useConsumable(item obj) {

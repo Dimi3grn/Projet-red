@@ -105,8 +105,9 @@ func (u *character) craftAdventureTunic() {
 		fmt.Println("Vous n'avez pas assez de matériaux pour fabriquer la Tunique de l'aventurier.")
 	} else {
 		u.purse -= 5
-		u.removeItem("Fourrure de Loup", 2)
-		u.removeItem("Peau de Troll", 1)
+		u.removeInventory(wolfFur)
+		u.removeInventory(wolfFur)
+		u.removeInventory(trollSkin)
 		u.addInventory(adventureTunic)
 		fmt.Println("Vous avez fabriqué une Tunique de l'aventurier !")
 	}
@@ -122,8 +123,8 @@ func (u *character) craftAdventureBoots() {
 		fmt.Println("Vous n'avez pas assez de matériaux pour fabriquer les Bottes de l'aventurier.")
 	} else {
 		u.purse -= 5
-		u.removeItem("Fourrure de Loup", 1)
-		u.removeItem("Cuir de Sanglier", 1)
+		u.removeInventory(wolfFur)
+		u.removeInventory(boarLeather)
 		u.addInventory(adventureBoots)
 		fmt.Println("Vous avez fabriqué des Bottes de l'aventurier !")
 	}
