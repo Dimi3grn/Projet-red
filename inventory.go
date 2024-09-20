@@ -90,6 +90,7 @@ func (u *character) accessInventory() {
 			clear()
 			u.spellBook(item.name)
 		default:
+			clear()
 			fmt.Println("Cet objet ne peut pas être utilisé ou équipé.")
 		}
 	}
@@ -189,7 +190,7 @@ func (u *character) equipHead(item obj) {
 
 func (u *character) equipBody(item obj) {
 	if u.stuff.body.name != "" {
-		u.addInventory(u.stuff.head)
+		u.addInventory(u.stuff.body)
 		fmt.Printf("Vous avez retiré %s et équipé %s.\n", u.stuff.body.name, item.name)
 		u.removeInventory(item)
 	} else {

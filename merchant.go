@@ -36,6 +36,7 @@ var boarLeatherAvailable bool = true
 var ravenFeatherAvailable bool = true
 var inventorySpaceAvaible bool = true
 
+// accède au menu du marchant
 func (u *character) accessMerchant() {
 	red := "\033[31m"
 	yellow := "\033[33m"
@@ -129,42 +130,53 @@ func (u *character) accessMerchant() {
 		}
 		u.accessMerchant()
 	case "1":
-		if healthPotAvailable && u.purse >= healthPotPrice {
-			u.addInventory(obj1)      // Ajoute la potion de vie
-			u.purse -= healthPotPrice // Déduit le coût de la potion de vie
-			clear()
-			fmt.Println("Vous avez acheté une Potion de vie !")
-			quant_healthPot-- // Réduit la quantité disponible chez le marchand
-			if quant_healthPot == 0 {
-				healthPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(obj1.name) > 0) {
+			if healthPotAvailable && u.purse >= healthPotPrice {
+				u.addInventory(obj1)      // Ajoute la potion de vie
+				u.purse -= healthPotPrice // Déduit le coût de la potion de vie
+				clear()
+				fmt.Println("Vous avez acheté une Potion de vie !")
+				quant_healthPot-- // Réduit la quantité disponible chez le marchand
+				if quant_healthPot == 0 {
+					healthPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < healthPotPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de potions de vie.")
 			}
-		} else if u.purse < healthPotPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de potions de vie.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
 
 	case "2":
-		if poisonPotAvailable && u.purse >= poisonPotPrice {
-			u.addInventory(obj2)      // Ajoute une potion de poison
-			u.purse -= poisonPotPrice // Déduit le coût de la potion de poison
-			fmt.Printf("Vous avez acheté une Potion de poison pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", poisonPotPrice, u.purse)
-			quant_poisonPot-- // Réduit la quantité disponible chez le marchand
-			if quant_poisonPot == 0 {
-				poisonPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(obj2.name) > 0) {
+			if poisonPotAvailable && u.purse >= poisonPotPrice {
+				u.addInventory(obj2)      // Ajoute une potion de poison
+				u.purse -= poisonPotPrice // Déduit le coût de la potion de poison
+				fmt.Printf("Vous avez acheté une Potion de poison pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", poisonPotPrice, u.purse)
+				quant_poisonPot-- // Réduit la quantité disponible chez le marchand
+				if quant_poisonPot == 0 {
+					poisonPotAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < poisonPotPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de potions de poison.")
 			}
-		} else if u.purse < poisonPotPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette potion.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de potions de poison.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
-
 	case "3":
 		if u.purse >= fireSpellBookPrice && !fireSpellBookBought {
 			u.addInventory(fireSpellBook) // Ajoute le Livre de Sort dans l'inventaire
@@ -180,82 +192,103 @@ func (u *character) accessMerchant() {
 			fmt.Println("Vous n'avez pas assez d'argent.")
 		}
 		u.accessMerchant()
+
 	case "4":
-		if wolfFurAvailable && u.purse >= wolfFurPrice {
-			u.addInventory(wolfFur) // Ajoute la Fourrure de Loup
-			u.purse -= wolfFurPrice // Déduit le coût de la fourrure
-			clear()
-			fmt.Printf("Vous avez acheté une Fourrure de Loup pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", wolfFurPrice, u.purse)
-			quant_wolfFur-- // Réduit la quantité disponible chez le marchand
-			if quant_wolfFur == 0 {
-				wolfFurAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(wolfFur.name) > 0) {
+			if wolfFurAvailable && u.purse >= wolfFurPrice {
+				u.addInventory(wolfFur) // Ajoute la Fourrure de Loup
+				u.purse -= wolfFurPrice // Déduit le coût de la fourrure
+				clear()
+				fmt.Printf("Vous avez acheté une Fourrure de Loup pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", wolfFurPrice, u.purse)
+				quant_wolfFur-- // Réduit la quantité disponible chez le marchand
+				if quant_wolfFur == 0 {
+					wolfFurAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < wolfFurPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter cette fourrure.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de fourrures de loup.")
 			}
-		} else if u.purse < wolfFurPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette fourrure.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de fourrures de loup.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
-
 	case "5":
-		if trollSkinAvailable && u.purse >= trollSkinPrice {
-			u.addInventory(trollSkin) // Ajoute la Peau de Troll
-			u.purse -= trollSkinPrice // Déduit le coût de la peau de troll
-			clear()
-			fmt.Printf("Vous avez acheté une Peau de Troll pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", trollSkinPrice, u.purse)
-			quant_trollSkin-- // Réduit la quantité disponible chez le marchand
-			if quant_trollSkin == 0 {
-				trollSkinAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(trollSkin.name) > 0) {
+			if trollSkinAvailable && u.purse >= trollSkinPrice {
+				u.addInventory(trollSkin) // Ajoute la Peau de Troll
+				u.purse -= trollSkinPrice // Déduit le coût de la peau de troll
+				clear()
+				fmt.Printf("Vous avez acheté une Peau de Troll pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", trollSkinPrice, u.purse)
+				quant_trollSkin-- // Réduit la quantité disponible chez le marchand
+				if quant_trollSkin == 0 {
+					trollSkinAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < trollSkinPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter cette peau.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de peaux de troll.")
 			}
-		} else if u.purse < trollSkinPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette peau.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de peaux de troll.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
-
 	case "6":
-		if boarLeatherAvailable && u.purse >= boarLeatherPrice {
-			u.addInventory(boarLeather) // Ajoute le Cuir de Sanglier
-			u.purse -= boarLeatherPrice // Déduit le coût du cuir
-			clear()
-			fmt.Printf("Vous avez acheté un Cuir de Sanglier pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", boarLeatherPrice, u.purse)
-			quant_boarLeather-- // Réduit la quantité disponible chez le marchand
-			if quant_boarLeather == 0 {
-				boarLeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(boarLeather.name) > 0) {
+			if boarLeatherAvailable && u.purse >= boarLeatherPrice {
+				u.addInventory(boarLeather) // Ajoute le Cuir de Sanglier
+				u.purse -= boarLeatherPrice // Déduit le coût du cuir
+				clear()
+				fmt.Printf("Vous avez acheté un Cuir de Sanglier pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", boarLeatherPrice, u.purse)
+				quant_boarLeather-- // Réduit la quantité disponible chez le marchand
+				if quant_boarLeather == 0 {
+					boarLeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < boarLeatherPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter ce cuir.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de cuirs de sanglier.")
 			}
-		} else if u.purse < boarLeatherPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter ce cuir.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de cuirs de sanglier.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
-
 	case "7":
-		if ravenFeatherAvailable && u.purse >= ravenFeatherPrice {
-			u.addInventory(ravenFeather) // Ajoute la Plume de Corbeau
-			u.purse -= ravenFeatherPrice // Déduit le coût de la plume
-			clear()
-			fmt.Printf("Vous avez acheté une Plume de Corbeau pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", ravenFeatherPrice, u.purse)
-			quant_ravenFeather-- // Réduit la quantité disponible chez le marchand
-			if quant_ravenFeather == 0 {
-				ravenFeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+		if (len(u.inv) < u.invSize) || (u.checkInventory(ravenFeather.name) > 0) {
+			if ravenFeatherAvailable && u.purse >= ravenFeatherPrice {
+				u.addInventory(ravenFeather) // Ajoute la Plume de Corbeau
+				u.purse -= ravenFeatherPrice // Déduit le coût de la plume
+				clear()
+				fmt.Printf("Vous avez acheté une Plume de Corbeau pour %d pièces d'or ! Il vous reste %d pièces d'or.\n", ravenFeatherPrice, u.purse)
+				quant_ravenFeather-- // Réduit la quantité disponible chez le marchand
+				if quant_ravenFeather == 0 {
+					ravenFeatherAvailable = false // Potion n'est plus disponible après avoir été épuisée
+				}
+			} else if u.purse < ravenFeatherPrice {
+				clear()
+				fmt.Println("Vous n'avez pas assez d'argent pour acheter cette plume.")
+			} else {
+				clear()
+				fmt.Println("Le marchand n'a plus de plumes de corbeau.")
 			}
-		} else if u.purse < ravenFeatherPrice {
-			clear()
-			fmt.Println("Vous n'avez pas assez d'argent pour acheter cette plume.")
+			u.accessMerchant()
 		} else {
 			clear()
-			fmt.Println("Le marchand n'a plus de plumes de corbeau.")
+			fmt.Println("Vous n'avez pas asser d'espace d'inventaire")
+			u.accessMerchant()
 		}
-		u.accessMerchant()
-
 	case "exit", "e":
 		clear()
 		fmt.Println("Vous quittez le marchand.")
