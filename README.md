@@ -11,3 +11,10 @@ Bienvenue dans le Jeu CLI Médiéval Fantastique ! Ce jeu, développé en Golang
 - **Combat au Tour par Tour** : Participez à des combats stratégiques contre des gobelins, chevaliers et autres ennemis, chacun ayant ses propres schémas d'attaque.
 - **Système de Sorts** : Apprenez et lancez des sorts puissants, gérez votre mana, et débloquez de nouvelles compétences à mesure que vous progressez.
 - **Progression** : Gagnez de l'expérience, montez de niveau et améliorez vos statistiques pour affronter des adversaires de plus en plus puissants.
+
+### Installation
+1. Clonez ce dépôt sur votre machine locale :
+```
+git clone <lien_du_dépôt>
+
+```
